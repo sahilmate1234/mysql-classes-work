@@ -1,0 +1,234 @@
+-- Create the database
+CREATE DATABASE Airline;
+
+-- Select the database for use
+USE Airline;
+
+-- Create Database
+CREATE DATABASE Airline;
+USE Airline;
+
+-- 1. Airlines
+CREATE TABLE Airlines (
+    Airline_ID INT PRIMARY KEY,
+    Airline_Name VARCHAR(100) NOT NULL,
+    Country VARCHAR(50),
+    IATA_Code CHAR(2),
+    ICAO_Code CHAR(3),
+    Headquarters VARCHAR(100),
+    Founded_Year INT,
+    Fleet_Size INT,
+    Website VARCHAR(100),
+    Contact_Number VARCHAR(15)
+);
+INSERT INTO Airlines VALUES
+(1, 'Air India', 'India', 'AI', 'AIC', 'New Delhi', 1932, 120, 'www.airindia.com', '+911124656565'),
+(2, 'IndiGo', 'India', '6E', 'IGO', 'Gurgaon', 2006, 280, 'www.goindigo.in', '+911246200600');
+SELECT * FROM Airlines;
+SELECT Airline_Name, Country FROM Airlines WHERE Country = 'India';
+SELECT Airline_Name, Fleet_Size FROM Airlines ORDER BY Fleet_Size DESC;
+TRUNCATE TABLE Airlines;
+DROP TABLE Airlines;
+
+-- 2. Airports
+CREATE TABLE Airports (
+    Airport_ID INT PRIMARY KEY,
+    Airport_Name VARCHAR(100) NOT NULL,
+    City VARCHAR(50),
+    Country VARCHAR(50),
+    IATA_Code CHAR(3),
+    ICAO_Code CHAR(4),
+    Timezone VARCHAR(50),
+    Elevation_M INT,
+    Latitude DECIMAL(9,6),
+    Longitude DECIMAL(9,6)
+);
+INSERT INTO Airports VALUES
+(1, 'Indira Gandhi International Airport', 'New Delhi', 'India', 'DEL', 'VIDP', 'Asia/Kolkata', 233, 28.5562, 77.1000),
+(2, 'Chhatrapati Shivaji Maharaj International Airport', 'Mumbai', 'India', 'BOM', 'VABB', 'Asia/Kolkata', 11, 19.0896, 72.8656);
+SELECT * FROM Airports;
+SELECT Airport_Name, City FROM Airports WHERE Country = 'India';
+SELECT City, COUNT(*) AS Airport_Count FROM Airports GROUP BY City;
+TRUNCATE TABLE Airports;
+DROP TABLE Airports;
+
+-- 3. Aircrafts
+CREATE TABLE Aircrafts (
+    Aircraft_ID INT PRIMARY KEY,
+    Airline_ID INT,
+    Model VARCHAR(50),
+    Manufacturer VARCHAR(50),
+    Capacity INT,
+    Range_KM INT,
+    Registration_Number VARCHAR(10) UNIQUE,
+    Year_Of_Manufacture INT,
+    Status VARCHAR(20),
+    Last_Maintenance DATE,
+    FOREIGN KEY (Airline_ID) REFERENCES Airlines(Airline_ID)
+);
+INSERT INTO Aircrafts VALUES
+(1, 1, 'Boeing 777', 'Boeing', 300, 9700, 'VT-ALF', 2010, 'Active', '2024-06-12'),
+(2, 2, 'Airbus A320', 'Airbus', 180, 6100, 'VT-IDM', 2018, 'Active', '2024-05-20');
+SELECT * FROM Aircrafts;
+SELECT Model, Capacity FROM Aircrafts WHERE Capacity > 200;
+SELECT Manufacturer, COUNT(*) AS Total_Aircrafts FROM Aircrafts GROUP BY Manufacturer;
+TRUNCATE TABLE Aircrafts;
+DROP TABLE Aircrafts;
+
+-- 4. Flights
+CREATE TABLE Flights (
+    Flight_ID INT PRIMARY KEY,
+    Airline_ID INT,
+    Aircraft_ID INT,
+    Flight_Number VARCHAR(10) UNIQUE,
+    Departure_Airport_ID INT,
+    Arrival_Airport_ID INT,
+    Departure_Time DATETIME,
+    Arrival_Time DATETIME,
+    Duration_Hours DECIMAL(4,2),
+    Status VARCHAR(20),
+    FOREIGN KEY (Airline_ID) REFERENCES Airlines(Airline_ID),
+    FOREIGN KEY (Aircraft_ID) REFERENCES Aircrafts(Aircraft_ID),
+    FOREIGN KEY (Departure_Airport_ID) REFERENCES Airports(Airport_ID),
+    FOREIGN KEY (Arrival_Airport_ID) REFERENCES Airports(Airport_ID)
+);
+INSERT INTO Flights VALUES
+(1, 1, 1, 'AI101', 1, 2, '2024-07-10 08:00:00', '2024-07-10 10:10:00', 2.17, 'On Time'),
+(2, 2, 2, '6E202', 2, 1, '2024-07-11 15:00:00', '2024-07-11 17:20:00', 2.33, 'Delayed');
+SELECT * FROM Flights;
+SELECT Flight_Number, Status FROM Flights WHERE Status = 'On Time';
+SELECT Airline_ID, COUNT(*) AS Total_Flights FROM Flights GROUP BY Airline_ID;
+TRUNCATE TABLE Flights;
+DROP TABLE Flights;
+
+-- 5. Passengers
+CREATE TABLE Passengers (
+    Passenger_ID INT PRIMARY KEY,
+    First_Name VARCHAR(50),
+    Last_Name VARCHAR(50),
+    Gender VARCHAR(10),
+    Date_Of_Birth DATE,
+    Nationality VARCHAR(50),
+    Passport_Number VARCHAR(20) UNIQUE,
+    Email VARCHAR(100),
+    Phone_Number VARCHAR(15),
+    Frequent_Flyer_No VARCHAR(20)
+);
+INSERT INTO Passengers VALUES
+(1, 'Raj', 'Sharma', 'Male', '1990-05-14', 'Indian', 'P1234567', 'raj@example.com', '+919876543210', 'FF1001'),
+(2, 'Priya', 'Verma', 'Female', '1988-08-20', 'Indian', 'P7654321', 'priya@example.com', '+919812345678', 'FF1002');
+SELECT * FROM Passengers;
+SELECT First_Name, Last_Name FROM Passengers WHERE Nationality = 'Indian';
+SELECT Gender, COUNT(*) FROM Passengers GROUP BY Gender;
+TRUNCATE TABLE Passengers;
+DROP TABLE Passengers;
+
+-- 6. Bookings
+CREATE TABLE Bookings (
+    Booking_ID INT PRIMARY KEY,
+    Passenger_ID INT,
+    Flight_ID INT,
+    Booking_Date DATE,
+    Class VARCHAR(20),
+    Seat_Number VARCHAR(5),
+    Baggage_Weight_KG DECIMAL(5,2),
+    Booking_Status VARCHAR(20),
+    Special_Requests VARCHAR(255),
+    FOREIGN KEY (Passenger_ID) REFERENCES Passengers(Passenger_ID),
+    FOREIGN KEY (Flight_ID) REFERENCES Flights(Flight_ID)
+);
+INSERT INTO Bookings VALUES
+(1, 1, 1, '2024-07-01', 'Economy', '12A', 15.5, 'Confirmed', 'Vegetarian meal'),
+(2, 2, 2, '2024-07-02', 'Business', '2C', 20.0, 'Confirmed', 'Extra legroom');
+SELECT * FROM Bookings;
+SELECT Booking_ID, Class, Seat_Number FROM Bookings WHERE Class = 'Business';
+SELECT Booking_Status, COUNT(*) AS Total_Bookings FROM Bookings GROUP BY Booking_Status;
+TRUNCATE TABLE Bookings;
+DROP TABLE Bookings;
+
+-- 7. Tickets
+CREATE TABLE Tickets (
+    Ticket_ID INT PRIMARY KEY,
+    Booking_ID INT,
+    Ticket_Number VARCHAR(20) UNIQUE,
+    Issue_Date DATE,
+    Fare DECIMAL(10,2),
+    Taxes DECIMAL(10,2),
+    Total_Amount DECIMAL(10,2),
+    Payment_Status VARCHAR(20),
+    Boarding_Gate VARCHAR(10),
+    FOREIGN KEY (Booking_ID) REFERENCES Bookings(Booking_ID)
+);
+INSERT INTO Tickets VALUES
+(1, 1, 'TKT1001', '2024-07-01', 5000.00, 500.00, 5500.00, 'Paid', 'G12'),
+(2, 2, 'TKT1002', '2024-07-02', 12000.00, 1200.00, 13200.00, 'Paid', 'B05');
+SELECT * FROM Tickets;
+SELECT Ticket_Number, Total_Amount FROM Tickets WHERE Payment_Status = 'Paid';
+SELECT Boarding_Gate, COUNT(*) AS Gate_Count FROM Tickets GROUP BY Boarding_Gate;
+TRUNCATE TABLE Tickets;
+DROP TABLE Tickets;
+
+-- 8. Employees
+CREATE TABLE Employees (
+    Employee_ID INT PRIMARY KEY,
+    Airline_ID INT,
+    First_Name VARCHAR(50),
+    Last_Name VARCHAR(50),
+    Role VARCHAR(50),
+    Hire_Date DATE,
+    Salary DECIMAL(10,2),
+    Contact_Number VARCHAR(15),
+    Email VARCHAR(100),
+    Address VARCHAR(255),
+    FOREIGN KEY (Airline_ID) REFERENCES Airlines(Airline_ID)
+);
+INSERT INTO Employees VALUES
+(1, 1, 'Amit', 'Kumar', 'Pilot', '2015-03-15', 200000.00, '+911234567890', 'amit.pilot@example.com', 'New Delhi'),
+(2, 2, 'Sunita', 'Rao', 'Cabin Crew', '2018-06-01', 80000.00, '+919876543211', 'sunita.crew@example.com', 'Mumbai');
+SELECT * FROM Employees;
+SELECT First_Name, Last_Name, Role FROM Employees WHERE Role = 'Pilot';
+SELECT Role, COUNT(*) AS Role_Count FROM Employees GROUP BY Role;
+TRUNCATE TABLE Employees;
+DROP TABLE Employees;
+
+-- 9. Flight_Crew
+CREATE TABLE Flight_Crew (
+    Crew_ID INT PRIMARY KEY,
+    Flight_ID INT,
+    Employee_ID INT,
+    Role_On_Flight VARCHAR(50),
+    Duty_Start DATETIME,
+    Duty_End DATETIME,
+    FOREIGN KEY (Flight_ID) REFERENCES Flights(Flight_ID),
+    FOREIGN KEY (Employee_ID) REFERENCES Employees(Employee_ID)
+);
+INSERT INTO Flight_Crew VALUES
+(1, 1, 1, 'Captain', '2024-07-10 07:30:00', '2024-07-10 10:30:00'),
+(2, 2, 2, 'Lead Cabin Crew', '2024-07-11 14:30:00', '2024-07-11 17:30:00');
+SELECT * FROM Flight_Crew;
+SELECT Role_On_Flight, COUNT(*) AS Role_Count FROM Flight_Crew GROUP BY Role_On_Flight;
+SELECT Flight_ID, Employee_ID FROM Flight_Crew WHERE Role_On_Flight = 'Captain';
+TRUNCATE TABLE Flight_Crew;
+DROP TABLE Flight_Crew;
+
+-- 10. Payments
+CREATE TABLE Payments (
+    Payment_ID INT PRIMARY KEY,
+    Ticket_ID INT,
+    Payment_Date DATE,
+    Payment_Method VARCHAR(20),
+    Amount DECIMAL(10,2),
+    Currency VARCHAR(10),
+    Transaction_ID VARCHAR(50) UNIQUE,
+    Payment_Status VARCHAR(20),
+    Billing_Address VARCHAR(255),
+    FOREIGN KEY (Ticket_ID) REFERENCES Tickets(Ticket_ID)
+);
+INSERT INTO Payments VALUES
+(1, 1, '2024-07-01', 'Credit Card', 5500.00, 'INR', 'TXN1001', 'Completed', 'Delhi, India'),
+(2, 2, '2024-07-02', 'UPI', 13200.00, 'INR', 'TXN1002', 'Completed', 'Mumbai, India');
+SELECT * FROM Payments;
+SELECT Payment_Method, COUNT(*) AS Method_Count FROM Payments GROUP BY Payment_Method;
+SELECT Amount FROM Payments WHERE Payment_Status = 'Completed';
+TRUNCATE TABLE Payments;
+DROP TABLE Payments;
