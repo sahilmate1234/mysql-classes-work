@@ -1,0 +1,229 @@
+-- Create the Company Database
+CREATE DATABASE Company;
+
+-- Select the database use
+USE Company;
+
+-- 1. Companies
+
+CREATE TABLE Companies (
+    Company_ID INT PRIMARY KEY,
+    Company_Name VARCHAR(100) NOT NULL,
+    Registration_No VARCHAR(50) UNIQUE,
+    Founded_Date DATE,
+    CEO_Name VARCHAR(100),
+    Headquarters VARCHAR(100),
+    Industry_Type VARCHAR(50),
+    Employee_Count INT,
+    Website VARCHAR(100),
+    Contact_Number VARCHAR(15)
+);
+
+INSERT INTO Companies VALUES
+(1, 'TechVision Pvt Ltd', 'REG12345', '2010-05-15', 'Anil Sharma', 'Mumbai', 'IT Services', 500, 'www.techvision.com', '0229876543');
+
+SELECT * FROM Companies;
+
+TRUNCATE TABLE Companies;
+
+DROP TABLE Companies;
+
+-- 2. Departments
+
+CREATE TABLE Departments (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50) NOT NULL,
+    Company_ID INT,
+    Manager_Name VARCHAR(100),
+    Location VARCHAR(100),
+    Extension_Number VARCHAR(10),
+    Established_Date DATE,
+    Budget DECIMAL(12,2),
+    Employee_Count INT,
+    FOREIGN KEY (Company_ID) REFERENCES Companies(Company_ID)
+);
+
+INSERT INTO Departments VALUES
+(101, 'IT', 1, 'Rohit Verma', 'Mumbai', '101', '2010-06-01', 2000000.00, 50);
+
+SELECT * FROM Departments;
+
+TRUNCATE TABLE Departments;
+
+DROP TABLE Departments;
+
+-- 3. Employees
+
+CREATE TABLE Employees (
+    Emp_ID INT PRIMARY KEY,
+    First_Name VARCHAR(50),
+    Last_Name VARCHAR(50),
+    Dept_ID INT,
+    Email VARCHAR(100) UNIQUE,
+    Contact_Number VARCHAR(15),
+    Hire_Date DATE,
+    Job_Title VARCHAR(50),
+    Salary_ID INT,
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
+);
+
+INSERT INTO Employees VALUES
+(1001, 'Sahil', 'Mehta', 101, 'sahil.mehta@techvision.com', '9876543210', '2015-03-15', 'Software Engineer', 1);
+
+SELECT * FROM Employees;
+
+TRUNCATE TABLE Employees;
+
+DROP TABLE Employees;
+
+-- 4. Projects
+
+CREATE TABLE Projects (
+    Project_ID INT PRIMARY KEY,
+    Project_Name VARCHAR(100),
+    Dept_ID INT,
+    Client_ID INT,
+    Start_Date DATE,
+    End_Date DATE,
+    Budget DECIMAL(12,2),
+    Status VARCHAR(50),
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
+);
+
+INSERT INTO Projects VALUES
+(201, 'E-commerce Platform', 101, 301, '2024-01-10', '2024-12-31', 5000000.00, 'Ongoing');
+
+SELECT * FROM Projects;
+
+TRUNCATE TABLE Projects;
+
+DROP TABLE Projects;
+
+-- 5. Clients
+
+CREATE TABLE Clients (
+    Client_ID INT PRIMARY KEY,
+    Client_Name VARCHAR(100),
+    Contact_Person VARCHAR(100),
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15),
+    Address VARCHAR(200),
+    Industry VARCHAR(50),
+    Registration_Date DATE
+);
+
+INSERT INTO Clients VALUES
+(301, 'RetailX', 'Priya Singh', 'contact@retailx.com', '9123456789', 'Delhi', 'Retail', '2023-05-01');
+
+SELECT * FROM Clients;
+
+TRUNCATE TABLE Clients;
+
+DROP TABLE Clients;
+
+-- 6. Salaries
+
+CREATE TABLE Salaries (
+    Salary_ID INT PRIMARY KEY,
+    Emp_ID INT,
+    Basic_Pay DECIMAL(12,2),
+    Allowances DECIMAL(12,2),
+    Deductions DECIMAL(12,2),
+    Net_Pay DECIMAL(12,2),
+    Payment_Date DATE,
+    FOREIGN KEY (Emp_ID) REFERENCES Employees(Emp_ID)
+);
+
+INSERT INTO Salaries VALUES
+(1, 1001, 50000.00, 10000.00, 2000.00, 58000.00, '2025-07-31');
+
+SELECT * FROM Salaries;
+
+TRUNCATE TABLE Salaries;
+
+DROP TABLE Salaries;
+
+-- 7. Attendance
+
+CREATE TABLE Attendance (
+    Attendance_ID INT PRIMARY KEY,
+    Emp_ID INT,
+    Date DATE,
+    Status VARCHAR(10),
+    Check_In TIME,
+    Check_Out TIME,
+    FOREIGN KEY (Emp_ID) REFERENCES Employees(Emp_ID)
+);
+
+INSERT INTO Attendance VALUES
+(1, 1001, '2025-08-08', 'Present', '09:15:00', '18:10:00');
+
+SELECT * FROM Attendance;
+
+TRUNCATE TABLE Attendance;
+
+DROP TABLE Attendance;
+
+-- 8. Assets
+
+CREATE TABLE Assets (
+    Asset_ID INT PRIMARY KEY,
+    Asset_Name VARCHAR(100),
+    Dept_ID INT,
+    Purchase_Date DATE,
+    Value DECIMAL(12,2),
+    Condition_Status VARCHAR(50),
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
+);
+
+INSERT INTO Assets VALUES
+(1, 'Dell Laptop', 101, '2024-02-15', 55000.00, 'Good');
+
+SELECT * FROM Assets;
+
+TRUNCATE TABLE Assets;
+
+DROP TABLE Assets;
+
+-- 9. Training_Programs
+
+CREATE TABLE Training_Programs (
+    Training_ID INT PRIMARY KEY,
+    Title VARCHAR(100),
+    Dept_ID INT,
+    Trainer_Name VARCHAR(100),
+    Start_Date DATE,
+    End_Date DATE,
+    Location VARCHAR(100),
+    FOREIGN KEY (Dept_ID) REFERENCES Departments(Dept_ID)
+);
+
+INSERT INTO Training_Programs VALUES
+(1, 'Advanced Java', 101, 'Ankit Kapoor', '2025-07-15', '2025-07-20', 'Mumbai');
+
+SELECT * FROM Training_Programs;
+
+TRUNCATE TABLE Training_Programs;
+
+DROP TABLE Training_Programs;
+
+-- 10. Vendors
+
+CREATE TABLE Vendors (
+    Vendor_ID INT PRIMARY KEY,
+    Vendor_Name VARCHAR(100),
+    Contact_Person VARCHAR(100),
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15),
+    Address VARCHAR(200),
+    Products_Supplied TEXT
+);
+
+INSERT INTO Vendors VALUES
+(1, 'TechSupply Co.', 'Ramesh Yadav', 'support@techsupply.com', '9823456789', 'Pune', 'Laptops, Networking Devices');
+
+SELECT * FROM Vendors;
+
+TRUNCATE TABLE Vendors;
+
+DROP TABLE Vendors;
