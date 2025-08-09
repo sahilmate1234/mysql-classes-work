@@ -1,0 +1,253 @@
+ create database army;
+ 
+ use army;
+
+-- 1. Soldiers
+
+CREATE TABLE Soldiers (
+    Soldier_ID INT PRIMARY KEY,
+    First_Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL,
+    Rank_ID INT,
+    Unit_ID INT,
+    Date_of_Birth DATE,
+    Date_Enlisted DATE,
+    Blood_Group VARCHAR(5),
+    Contact_Number VARCHAR(15),
+    Email VARCHAR(100),
+    FOREIGN KEY (Rank_ID) REFERENCES Ranks(Rank_ID),
+    FOREIGN KEY (Unit_ID) REFERENCES Units(Unit_ID)
+);
+
+-- INSERT
+INSERT INTO Soldiers VALUES
+(1, 'Arjun', 'Rathore', 3, 101, '1990-05-12', '2010-06-01', 'O+', '9876543210', 'arjun.rathore@army.gov.in');
+
+-- SELECT
+SELECT * FROM Soldiers;
+
+-- TRUNCATE
+TRUNCATE TABLE Soldiers;
+
+-- DROP
+DROP TABLE Soldiers;
+
+-- 2. Ranks**
+
+CREATE TABLE Ranks (
+    Rank_ID INT PRIMARY KEY,
+    Rank_Name VARCHAR(50) NOT NULL,
+    Rank_Level INT,
+    Rank_Code VARCHAR(10) UNIQUE,
+    Pay_Grade VARCHAR(10),
+    Responsibilities TEXT,
+    Promotion_Criteria TEXT,
+    Uniform_Type VARCHAR(50),
+    Weapon_Authorization VARCHAR(50),
+    Created_At DATE
+);
+
+INSERT INTO Ranks VALUES
+(3, 'Captain', 3, 'CPT', 'O3', 'Commanding unit', 'Service years + merit', 'Officer Uniform', 'Sidearm', '2020-01-01');
+
+SELECT * FROM Ranks;
+
+TRUNCATE TABLE Ranks;
+
+DROP TABLE Ranks;
+
+ -- 3. Units
+
+CREATE TABLE Units (
+    Unit_ID INT PRIMARY KEY,
+    Unit_Name VARCHAR(100),
+    Unit_Type VARCHAR(50),
+    Location VARCHAR(100),
+    Commanding_Officer INT,
+    Strength INT,
+    Division_Name VARCHAR(100),
+    Established_Date DATE,
+    Specialization VARCHAR(100),
+    Contact_Number VARCHAR(15)
+);
+
+INSERT INTO Units VALUES
+(101, '1st Infantry', 'Infantry', 'Delhi Cantt', 3, 500, 'Northern Command', '1980-05-15', 'Ground Combat', '0112567890');
+
+SELECT * FROM Units;
+
+TRUNCATE TABLE Units;
+
+DROP TABLE Units;
+
+-- 4. Missions
+
+CREATE TABLE Missions (
+    Mission_ID INT PRIMARY KEY,
+    Mission_Name VARCHAR(100),
+    Start_Date DATE,
+    End_Date DATE,
+    Location VARCHAR(100),
+    Objective TEXT,
+    Status VARCHAR(50),
+    Commanding_Officer INT,
+    Troop_Strength INT,
+    Budget DECIMAL(12,2)
+);
+
+INSERT INTO Missions VALUES
+(201, 'Operation Vijay', '1999-05-05', '1999-07-26', 'Kargil', 'Recapture territory', 'Completed', 3, 2000, 150000000.00);
+
+SELECT * FROM Missions;
+
+TRUNCATE TABLE Missions;
+
+DROP TABLE Missions;
+
+-- 5. Weapons
+
+CREATE TABLE Weapons (
+    Weapon_ID INT PRIMARY KEY,
+    Weapon_Name VARCHAR(100),
+    Type VARCHAR(50),
+    Caliber VARCHAR(20),
+    Range_km DECIMAL(5,2),
+    Weight_kg DECIMAL(5,2),
+    Manufacturer VARCHAR(100),
+    Service_Entry_Year INT,
+    Status VARCHAR(50),
+    Unit_Assigned INT
+);
+
+INSERT INTO Weapons VALUES
+(301, 'INSAS Rifle', 'Rifle', '5.56mm', 0.4, 4.15, 'OFB India', 1998, 'Active', 101);
+
+SELECT * FROM Weapons;
+
+TRUNCATE TABLE Weapons;
+
+DROP TABLE Weapons;
+
+-- 6. Vehicles
+
+
+CREATE TABLE Vehicles (
+    Vehicle_ID INT PRIMARY KEY,
+    Vehicle_Name VARCHAR(100),
+    Type VARCHAR(50),
+    Weight_tons DECIMAL(5,2),
+    Crew_Capacity INT,
+    Speed_kmph DECIMAL(5,2),
+    Range_km DECIMAL(6,2),
+    Manufacturer VARCHAR(100),
+    Year_Introduced INT,
+    Unit_Assigned INT
+);
+
+INSERT INTO Vehicles VALUES
+(401, 'T-90 Bhishma', 'Tank', 46.5, 3, 60, 550, 'Uralvagonzavod', 2001, 101);
+
+SELECT * FROM Vehicles;
+
+TRUNCATE TABLE Vehicles;
+
+DROP TABLE Vehicles;
+
+-- 7. Training\_Camps
+
+CREATE TABLE Training_Camps (
+    Camp_ID INT PRIMARY KEY,
+    Camp_Name VARCHAR(100),
+    Location VARCHAR(100),
+    Capacity INT,
+    Established_Year INT,
+    Training_Type VARCHAR(100),
+    Duration_weeks INT,
+    Instructors_Count INT,
+    Contact_Number VARCHAR(15),
+    Head_Instructor VARCHAR(100)
+);
+
+INSERT INTO Training_Camps VALUES
+(501, 'Commando School', 'Belgaum', 300, 1967, 'Special Ops', 12, 25, '08312456789', 'Col. Sharma');
+
+SELECT * FROM Training_Camps;
+
+TRUNCATE TABLE Training_Camps;
+
+DROP TABLE Training_Camps;
+
+-- 8. Supplies
+
+CREATE TABLE Supplies (
+    Supply_ID INT PRIMARY KEY,
+    Supply_Name VARCHAR(100),
+    Category VARCHAR(50),
+    Quantity INT,
+    Unit_Measure VARCHAR(20),
+    Supplier_Name VARCHAR(100),
+    Delivery_Date DATE,
+    Expiry_Date DATE,
+    Unit_Assigned INT,
+    Status VARCHAR(50)
+);
+
+INSERT INTO Supplies VALUES
+(601, 'Ammunition 5.56mm', 'Ammunition', 50000, 'Rounds', 'OFB', '2025-07-01', '2030-07-01', 101, 'Available');
+
+SELECT * FROM Supplies;
+
+TRUNCATE TABLE Supplies;
+
+DROP TABLE Supplies;
+	
+-- 9. Medical_Records
+
+CREATE TABLE Medical_Records (
+    Record_ID INT PRIMARY KEY,
+    Soldier_ID INT,
+    Checkup_Date DATE,
+    Diagnosis TEXT,
+    Treatment TEXT,
+    Prescribed_By VARCHAR(100),
+    Follow_Up_Date DATE,
+    Hospital_Name VARCHAR(100),
+    Blood_Pressure VARCHAR(10),
+    Remarks TEXT,
+    FOREIGN KEY (Soldier_ID) REFERENCES Soldiers(Soldier_ID)
+);
+
+INSERT INTO Medical_Records VALUES
+(701, 1, '2025-06-01', 'Sprained ankle', 'Physiotherapy', 'Dr. Rao', '2025-06-15', 'Army Base Hospital', '120/80', 'Recovering well');
+
+SELECT * FROM Medical_Records;
+
+TRUNCATE TABLE Medical_Records;
+
+DROP TABLE Medical_Records;
+
+-- 10. Promotions
+
+CREATE TABLE Promotions (
+    Promotion_ID INT PRIMARY KEY,
+    Soldier_ID INT,
+    Old_Rank VARCHAR(50),
+    New_Rank VARCHAR(50),
+    Promotion_Date DATE,
+    Approved_By VARCHAR(100),
+    Reason TEXT,
+    Remarks TEXT,
+    Unit_ID INT,
+    Document_Ref VARCHAR(50),
+    FOREIGN KEY (Soldier_ID) REFERENCES Soldiers(Soldier_ID),
+    FOREIGN KEY (Unit_ID) REFERENCES Units(Unit_ID)
+);
+
+INSERT INTO Promotions VALUES
+(801, 1, 'Lieutenant', 'Captain', '2018-05-01', 'General Singh', 'Exemplary service', 'Outstanding leadership', 101, 'DOC123');
+
+SELECT * FROM Promotions;
+
+TRUNCATE TABLE Promotions;
+
+DROP TABLE Promotions;
