@@ -1,0 +1,299 @@
+1. Airline Database
+
+Flights: Flight_ID, Airline_Name, Source, Destination, Duration, Capacity
+
+Passengers: Passenger_ID, Name, Age, Gender, Contact_Number, Email
+
+Bookings: Booking_ID, Passenger_ID, Flight_ID, Seat_No, Booking_Date, Status
+
+Staff: Staff_ID, Name, Role, Contact, Assigned_Flight, Salary
+
+Airports: Airport_ID, Name, Location, Country, Code
+
+2. Hotel Database
+
+Hotels: Hotel_ID, Name, Location, Rating, Contact_Number
+
+Rooms: Room_ID, Hotel_ID, Room_Type, Price, Availability
+
+Guests: Guest_ID, Name, Email, Phone, Address, Nationality
+
+Bookings: Booking_ID, Guest_ID, Room_ID, Check_In, Check_Out, Payment_Status
+
+Staff: Staff_ID, Name, Position, Contact, Shift, Salary
+
+3. Library Database
+
+Books: Book_ID, Title, Author, Genre, ISBN, Availability
+
+Members: Member_ID, Name, Email, Contact, Membership_Type
+
+Loans: Loan_ID, Book_ID, Member_ID, Issue_Date, Return_Date, Fine
+
+Authors: Author_ID, Name, Nationality, DOB, Notable_Works
+
+Staff: Staff_ID, Name, Position, Contact, Salary
+
+4. College Database
+
+Students: Student_ID, Name, DOB, Gender, Course, Year
+
+Courses: Course_ID, Name, Duration, Credits, Department
+
+Professors: Professor_ID, Name, Department, Contact, Email
+
+Exams: Exam_ID, Course_ID, Date, Time, Venue
+
+Results: Result_ID, Student_ID, Exam_ID, Marks, Grade
+
+5. Birthday Party Database
+
+Parties: Party_ID, Host_Name, Date, Time, Venue, Theme
+
+Guests: Guest_ID, Name, Age, Contact, RSVP_Status
+
+Food_Menu: Item_ID, Name, Type, Quantity, Caterer
+
+Entertainment: Activity_ID, Type, Performer, Duration, Cost
+
+Gifts: Gift_ID, Guest_ID, Description, Value, Received_Date
+
+6. Hospital Database
+
+Patients: Patient_ID, Name, Age, Gender, Contact, Address
+
+Doctors: Doctor_ID, Name, Specialty, Contact, Availability
+
+Appointments: Appointment_ID, Patient_ID, Doctor_ID, Date, Time, Status
+
+Medications: Med_ID, Name, Type, Dosage, Price
+
+Bills: Bill_ID, Patient_ID, Amount, Date, Payment_Status
+
+7. Travel Agent Database
+
+Agencies: Agency_ID, Name, Location, Contact, Rating
+
+Customers: Customer_ID, Name, Email, Phone, Address
+
+Tours: Tour_ID, Name, Destination, Duration, Price
+
+Bookings: Booking_ID, Customer_ID, Tour_ID, Booking_Date, Status
+
+Guides: Guide_ID, Name, Language, Contact, Salary
+
+8. E-Learning Platform Database
+
+Users: User_ID, Name, Email, Role, Join_Date
+
+Courses: Course_ID, Title, Instructor, Duration, Price
+
+Enrollments: Enrollment_ID, User_ID, Course_ID, Date, Status
+
+Assessments: Assessment_ID, Course_ID, Type, Date, Max_Score
+
+Payments: Payment_ID, User_ID, Course_ID, Amount, Date, Method
+
+9. Cab Services Database
+
+Drivers: Driver_ID, Name, License_No, Phone, Rating
+
+Cabs: Cab_ID, Model, Plate_No, Type, Capacity, Status
+
+Customers: Customer_ID, Name, Contact, Email, Address
+
+Rides: Ride_ID, Driver_ID, Customer_ID, Pickup, Drop, Fare
+
+Payments: Payment_ID, Ride_ID, Amount, Date, Method
+
+10. Social Media Database
+
+Users: User_ID, Name, Email, Password, DOB, Gender
+
+Posts: Post_ID, User_ID, Content, Media, Post_Date, Likes
+
+Comments: Comment_ID, Post_ID, User_ID, Text, Date
+
+Friends: Friendship_ID, User1_ID, User2_ID, Status, Since
+
+Messages: Message_ID, Sender_ID, Receiver_ID, Content, Sent_Time
+
+11. Banking Database
+
+Customers: Customer_ID, Name, Address, Phone, Email
+
+Accounts: Account_ID, Customer_ID, Type, Balance, Open_Date
+
+Transactions: Trans_ID, Account_ID, Amount, Type, Date
+
+Loans: Loan_ID, Customer_ID, Amount, Interest, Duration
+
+Branches: Branch_ID, Name, Location, Manager, Contact
+
+12. Shopping Mall Database
+
+Shops: Shop_ID, Name, Type, Owner, Contact
+
+Customers: Customer_ID, Name, Email, Contact, Membership
+
+Employees: Emp_ID, Name, Position, Salary, Shop_ID
+
+Sales: Sale_ID, Shop_ID, Customer_ID, Amount, Date
+
+Inventory: Item_ID, Shop_ID, Product_Name, Quantity, Price
+
+13. Sports League Database
+
+Teams: Team_ID, Name, City, Coach, Ranking
+
+Players: Player_ID, Name, Age, Position, Team_ID
+
+Matches: Match_ID, Team1_ID, Team2_ID, Date, Venue
+
+Venues: Venue_ID, Name, Location, Capacity, Contact
+
+Scores: Score_ID, Match_ID, Team_ID, Points, Result
+
+14. Movie Streaming Database
+
+Movies: Movie_ID, Title, Genre, Release_Date, Rating
+
+Users: User_ID, Name, Email, Subscription_Type, Join_Date
+
+Subscriptions: Sub_ID, User_ID, Plan, Start_Date, End_Date
+
+Reviews: Review_ID, Movie_ID, User_ID, Rating, Comment
+
+Watch_History: History_ID, User_ID, Movie_ID, Date, Duration
+
+15. Online Food Delivery Database
+
+Restaurants: Rest_ID, Name, Location, Rating, Contact
+
+Menus: Item_ID, Rest_ID, Name, Price, Category
+
+Customers: Cust_ID, Name, Address, Phone, Email
+
+Orders: Order_ID, Cust_ID, Rest_ID, Date, Total, Status
+
+Delivery_Partners: Partner_ID, Name, Phone, Vehicle, Rating
+
+16. Manufacturing Database
+
+Factories: Factory_ID, Name, Location, Manager, Contact
+
+Products: Product_ID, Name, Type, Price, Factory_ID
+
+Employees: Emp_ID, Name, Position, Salary, Factory_ID
+
+Orders: Order_ID, Product_ID, Quantity, Customer, Date
+
+Suppliers: Supplier_ID, Name, Location, Contact, Rating
+
+17. Space Exploration Database
+
+Missions: Mission_ID, Name, Objective, Launch_Date, Status
+
+Astronauts: Astro_ID, Name, Age, Nationality, Missions_Assigned
+
+Spacecraft: Craft_ID, Name, Type, Capacity, Manufacturer
+
+Experiments: Exp_ID, Mission_ID, Title, Field, Results
+
+Launch_Sites: Site_ID, Name, Location, Country, Capacity
+
+18. Gaming Platform Database
+
+Games: Game_ID, Title, Genre, Developer, Price
+
+Players: Player_ID, Name, Email, Country, Rank
+
+Scores: Score_ID, Player_ID, Game_ID, Points, Date
+
+Achievements: Ach_ID, Player_ID, Game_ID, Title, Date
+
+Purchases: Purchase_ID, Player_ID, Game_ID, Amount, Date
+
+19. Event Management Database
+
+Events: Event_ID, Title, Date, Venue, Type
+
+Venues: Venue_ID, Name, Location, Capacity, Contact
+
+Attendees: Attendee_ID, Name, Contact, Ticket_No, Event_ID
+
+Sponsors: Sponsor_ID, Name, Industry, Amount, Event_ID
+
+Tickets: Ticket_ID, Event_ID, Price, Type, Availability
+
+20. Music Streaming Database
+
+Songs: Song_ID, Title, Artist, Album, Duration
+
+Artists: Artist_ID, Name, Genre, Country, Debut_Year
+
+Albums: Album_ID, Title, Artist_ID, Release_Date, Genre
+
+Playlists: Playlist_ID, User_ID, Name, Created_Date
+
+Users: User_ID, Name, Email, Subscription_Type, Join_Date
+
+21. Zoo Management Database
+
+Animals: Animal_ID, Name, Species, Age, Habitat
+
+Species: Species_ID, Name, Category, Origin, Diet
+
+Habitats: Habitat_ID, Name, Type, Size, Location
+
+Zookeepers: Keeper_ID, Name, Contact, Assigned_Habitat, Salary
+
+Visitors: Visitor_ID, Name, Age, Ticket_No, Visit_Date
+
+22. Fitness Center Database
+
+Members: Member_ID, Name, Age, Contact, Join_Date
+
+Trainers: Trainer_ID, Name, Specialty, Contact, Salary
+
+Equipment: Equip_ID, Name, Type, Purchase_Date, Status
+
+Classes: Class_ID, Name, Trainer_ID, Schedule, Fee
+
+Payments: Payment_ID, Member_ID, Amount, Date, Method
+
+23. Real Estate Database
+
+Properties: Prop_ID, Type, Location, Price, Status
+
+Agents: Agent_ID, Name, Contact, Experience, Branch
+
+Buyers: Buyer_ID, Name, Email, Contact, Budget
+
+Deals: Deal_ID, Prop_ID, Buyer_ID, Agent_ID, Date
+
+Payments: Pay_ID, Deal_ID, Amount, Date, Method
+
+24. Weather Forecasting Database
+
+Stations: Station_ID, Name, Location, Country, Capacity
+
+Locations: Loc_ID, City, Country, Region, Code
+
+Reports: Report_ID, Station_ID, Date, Temperature, Rainfall
+
+Alerts: Alert_ID, Location_ID, Type, Severity, Date
+
+Forecasts: Forecast_ID, Loc_ID, Date, Min_Temp, Max_Temp
+
+25. Pet Care Center Database
+
+Pets: Pet_ID, Name, Species, Breed, Age, Owner_ID
+
+Owners: Owner_ID, Name, Contact, Address, Email
+
+Vets: Vet_ID, Name, Specialty, Contact, Availability
+
+Appointments: App_ID, Pet_ID, Vet_ID, Date, Purpose
+
+Treatments: Treatment_ID, App_ID, Description, Cost, Date
