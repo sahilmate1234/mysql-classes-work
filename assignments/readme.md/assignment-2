@@ -1,0 +1,307 @@
+-- ==============================
+-- 1. Create Database
+-- ==============================
+CREATE DATABASE Healthcare_System;
+USE Healthcare_System;
+
+-- ==============================
+-- 2. Create Tables
+-- ==============================
+
+-- Patients Table
+CREATE TABLE Patients (
+    Patient_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Age INT CHECK (Age > 0),
+    Gender ENUM('Male','Female','Other'),
+    Contact VARCHAR(15) UNIQUE,
+    Address VARCHAR(200)
+);
+
+-- Doctors Table
+CREATE TABLE Doctors (
+    Doctor_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Specialty VARCHAR(100),
+    Phone VARCHAR(15) UNIQUE,
+    Email VARCHAR(100) UNIQUE
+);
+
+-- Appointments Table
+CREATE TABLE Appointments (
+    Appointment_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_ID INT,
+    Doctor_ID INT,
+    Date DATE,
+    Time TIME,
+    Status ENUM('Scheduled','Completed','Cancelled') DEFAULT 'Scheduled',
+    FOREIGN KEY (Patient_ID) REFERENCES Patients(Patient_ID),
+    FOREIGN KEY (Doctor_ID) REFERENCES Doctors(Doctor_ID)
+);
+
+-- Medical_History Table
+CREATE TABLE Medical_History (
+    History_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_ID INT,
+    Diagnosis VARCHAR(200),
+    Treatment VARCHAR(200),
+    Notes TEXT,
+    FOREIGN KEY (Patient_ID) REFERENCES Patients(Patient_ID)
+);
+
+-- Medications Table
+CREATE TABLE Medications (
+    Medication_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Type VARCHAR(50),
+    Price DECIMAL(10,2) CHECK (Price >= 0),
+    Description TEXT
+);
+
+-- Prescriptions Table
+CREATE TABLE Prescriptions (
+    Prescription_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_ID INT,
+    Medication_ID INT,
+    Date_Provided DATE,
+    Dosage VARCHAR(100),
+    FOREIGN KEY (Patient_ID) REFERENCES Patients(Patient_ID),
+    FOREIGN KEY (Medication_ID) REFERENCES Medications(Medication_ID)
+);
+
+-- Bills Table
+CREATE TABLE Bills (
+    Bill_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Patient_ID INT,
+    Total_Amount DECIMAL(10,2) CHECK (Total_Amount >= 0),
+    Payment_Status ENUM('Paid','Pending','Cancelled') DEFAULT 'Pending',
+    Date DATE,
+    FOREIGN KEY (Patient_ID) REFERENCES Patients(Patient_ID)
+);
+
+-- Staff Table
+CREATE TABLE Staff (
+    Staff_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Role VARCHAR(50),
+    Contact VARCHAR(15),
+    Shift ENUM('Morning','Evening','Night')
+);
+
+-- Departments Table
+CREATE TABLE Departments (
+    Department_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Location VARCHAR(100),
+    Phone VARCHAR(15) UNIQUE
+);
+
+-- Facilities Table
+CREATE TABLE Facilities (
+    Facility_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Type VARCHAR(50),
+    Cost DECIMAL(10,2) CHECK (Cost >= 0),
+    Availability_Status ENUM('Available','Not Available') DEFAULT 'Available'
+);
+
+-- ==============================
+-- 3. Insert Sample Records (10 each)
+-- ==============================
+
+-- Patients
+INSERT INTO Patients (Name, Age, Gender, Contact, Address) VALUES
+('Rahul Sharma', 32, 'Male', '9876543210', 'Pune'),
+('Priya Singh', 28, 'Female', '9876543211', 'Mumbai'),
+('Amit Verma', 40, 'Male', '9876543212', 'Delhi'),
+('Neha Patel', 35, 'Female', '9876543213', 'Bangalore'),
+('Suresh Reddy', 50, 'Male', '9876543214', 'Hyderabad'),
+('Kiran Kumar', 45, 'Male', '9876543215', 'Chennai'),
+('Anjali Mehta', 29, 'Female', '9876543216', 'Ahmedabad'),
+('Deepak Yadav', 38, 'Male', '9876543217', 'Kolkata'),
+('Sneha Joshi', 26, 'Female', '9876543218', 'Jaipur'),
+('Manish Gupta', 31, 'Male', '9876543219', 'Lucknow');
+
+-- Doctors
+INSERT INTO Doctors (Name, Specialty, Phone, Email) VALUES
+('Dr. Arjun Rao', 'Cardiology', '9123456780', 'arjunrao@hospital.com'),
+('Dr. Meera Nair', 'Dermatology', '9123456781', 'meeranair@hospital.com'),
+('Dr. Sameer Khan', 'Orthopedics', '9123456782', 'sameerkhan@hospital.com'),
+('Dr. Kavita Sharma', 'Neurology', '9123456783', 'kavitasharma@hospital.com'),
+('Dr. Ramesh Patil', 'Pediatrics', '9123456784', 'rameshpatil@hospital.com'),
+('Dr. Sunita Jain', 'Gynecology', '9123456785', 'sunitajain@hospital.com'),
+('Dr. Ajay Kumar', 'ENT', '9123456786', 'ajaykumar@hospital.com'),
+('Dr. Shalini Verma', 'Oncology', '9123456787', 'shaliniverma@hospital.com'),
+('Dr. Vikas Desai', 'General Medicine', '9123456788', 'vikasdesai@hospital.com'),
+('Dr. Neeraj Bhatia', 'Psychiatry', '9123456789', 'neerajbhatia@hospital.com');
+
+-- Appointments
+INSERT INTO Appointments (Patient_ID, Doctor_ID, Date, Time, Status) VALUES
+(1,1,'2025-08-18','10:00:00','Scheduled'),
+(2,2,'2025-08-19','11:00:00','Scheduled'),
+(3,3,'2025-08-20','09:30:00','Completed'),
+(4,4,'2025-08-15','14:00:00','Cancelled'),
+(5,5,'2025-08-16','15:00:00','Scheduled'),
+(6,6,'2025-08-18','16:30:00','Completed'),
+(7,7,'2025-08-19','12:30:00','Scheduled'),
+(8,8,'2025-08-20','13:00:00','Scheduled'),
+(9,9,'2025-08-21','10:45:00','Completed'),
+(10,10,'2025-08-22','09:00:00','Scheduled');
+
+-- Medical_History
+INSERT INTO Medical_History (Patient_ID, Diagnosis, Treatment, Notes) VALUES
+(1,'Hypertension','Medication','Regular checkup required'),
+(2,'Skin Allergy','Ointment','Avoid dust exposure'),
+(3,'Fracture','Cast','Healing in progress'),
+(4,'Migraine','Painkillers','Monitor frequency'),
+(5,'Flu','Antibiotics','Rest for 5 days'),
+(6,'Diabetes','Insulin','Monthly review'),
+(7,'Tonsillitis','Surgery','Recovered'),
+(8,'Cancer','Chemotherapy','Under observation'),
+(9,'Fever','Paracetamol','Recovered'),
+(10,'Anxiety','Therapy','Weekly session');
+
+-- Medications
+INSERT INTO Medications (Name, Type, Price, Description) VALUES
+('Paracetamol','Tablet',20.00,'Fever reducer'),
+('Amoxicillin','Capsule',50.00,'Antibiotic'),
+('Ibuprofen','Tablet',30.00,'Pain reliever'),
+('Cetirizine','Tablet',15.00,'Anti-allergy'),
+('Insulin','Injection',200.00,'Diabetes control'),
+('Omeprazole','Capsule',40.00,'Acidity treatment'),
+('Aspirin','Tablet',25.00,'Blood thinner'),
+('Vitamin D','Supplement',60.00,'Bone health'),
+('Salbutamol','Inhaler',120.00,'Asthma relief'),
+('Metformin','Tablet',80.00,'Diabetes treatment');
+
+-- Prescriptions
+INSERT INTO Prescriptions (Patient_ID, Medication_ID, Date_Provided, Dosage) VALUES
+(1,1,'2025-08-12','1 tablet twice daily'),
+(2,2,'2025-08-13','1 capsule daily'),
+(3,3,'2025-08-14','2 tablets after meal'),
+(4,4,'2025-08-10','1 tablet at night'),
+(5,5,'2025-08-11','Injection daily'),
+(6,6,'2025-08-12','1 capsule in morning'),
+(7,7,'2025-08-13','1 tablet daily'),
+(8,8,'2025-08-14','1 capsule every 2 days'),
+(9,9,'2025-08-15','Use inhaler when required'),
+(10,10,'2025-08-16','1 tablet twice daily');
+
+-- Bills
+INSERT INTO Bills (Patient_ID, Total_Amount, Payment_Status, Date) VALUES
+(1,1500.00,'Paid','2025-08-12'),
+(2,2000.00,'Pending','2025-08-13'),
+(3,3000.00,'Paid','2025-08-14'),
+(4,1200.00,'Cancelled','2025-08-10'),
+(5,2500.00,'Paid','2025-08-11'),
+(6,4000.00,'Pending','2025-08-12'),
+(7,3500.00,'Paid','2025-08-13'),
+(8,8000.00,'Pending','2025-08-14'),
+(9,600.00,'Paid','2025-08-15'),
+(10,1800.00,'Paid','2025-08-16');
+
+-- Staff
+INSERT INTO Staff (Name, Role, Contact, Shift) VALUES
+('Ravi Kumar','Nurse','9001112221','Morning'),
+('Sneha Iyer','Receptionist','9001112222','Evening'),
+('Arjun Mehta','Lab Technician','9001112223','Night'),
+('Pooja Sharma','Nurse','9001112224','Morning'),
+('Kiran Patel','Ward Boy','9001112225','Night'),
+('Deepa Nair','Accountant','9001112226','Evening'),
+('Rahul Deshmukh','Pharmacist','9001112227','Morning'),
+('Anita Reddy','Cleaner','9001112228','Night'),
+('Vikram Singh','Security','9001112229','Night'),
+('Manoj Joshi','Receptionist','9001112230','Morning');
+
+-- Departments
+INSERT INTO Departments (Name, Location, Phone) VALUES
+('Cardiology','Block A','9111111110'),
+('Dermatology','Block B','9111111111'),
+('Orthopedics','Block C','9111111112'),
+('Neurology','Block D','9111111113'),
+('Pediatrics','Block E','9111111114'),
+('Gynecology','Block F','9111111115'),
+('ENT','Block G','9111111116'),
+('Oncology','Block H','9111111117'),
+('General Medicine','Block I','9111111118'),
+('Psychiatry','Block J','9111111119');
+
+-- Facilities
+INSERT INTO Facilities (Name, Type, Cost, Availability_Status) VALUES
+('MRI Scan','Diagnostic',5000.00,'Available'),
+('CT Scan','Diagnostic',4000.00,'Available'),
+('X-Ray','Diagnostic',800.00,'Available'),
+('ICU Bed','Treatment',2000.00,'Not Available'),
+('General Ward','Treatment',500.00,'Available'),
+('Private Room','Accommodation',2500.00,'Available'),
+('Operation Theater','Surgical',10000.00,'Available'),
+('Ambulance','Emergency',1500.00,'Available'),
+('Blood Bank','Support',300.00,'Available'),
+('Pharmacy','Support',100.00,'Available');
+
+-- ==============================
+-- 4. Queries
+-- ==============================
+
+-- Select Queries
+SELECT * FROM Patients WHERE Age > 30 ORDER BY Age DESC;
+SELECT Specialty, COUNT(*) AS DoctorCount FROM Doctors GROUP BY Specialty;
+
+-- Rename
+ALTER TABLE Doctors RENAME TO Physicians;
+ALTER TABLE Patients CHANGE Contact Phone_Number VARCHAR(15);
+
+-- Update
+UPDATE Bills SET Payment_Status='Paid' WHERE Bill_ID=2;
+UPDATE Patients SET Address='Nagpur' WHERE Patient_ID=5;
+
+-- Alter
+ALTER TABLE Staff ADD Salary DECIMAL(10,2);
+
+-- Delete
+DELETE FROM Appointments WHERE Status='Cancelled';
+
+-- Truncate
+TRUNCATE TABLE Staff;
+
+-- Drop Example
+DROP TABLE Facilities;
+
+-- SQL_SAFE_UPDATES
+SET SQL_SAFE_UPDATES = 1;
+UPDATE Patients SET Age = Age + 1 WHERE Patient_ID = 1;
+
+-- ==============================
+-- 5. Functions & Real-Life Analysis
+-- ==============================
+
+-- String Function
+SELECT UPPER(Name) AS PatientName FROM Patients;
+
+-- Numeric Function
+SELECT AVG(Age) AS Avg_Patient_Age FROM Patients;
+
+-- Date Function
+SELECT NOW() AS CurrentTime;
+
+-- Scheduling Next Appointment
+INSERT INTO Appointments (Patient_ID, Doctor_ID, Date, Time, Status)
+VALUES (2,1,'2025-08-25','10:00:00','Scheduled');
+
+-- Patient Medical History
+SELECT Diagnosis, Treatment, Notes FROM Medical_History WHERE Patient_ID=1;
+
+-- Doctors in Department (assume Specialty matches Dept Name)
+SELECT d.Name, d.Specialty
+FROM Physicians d
+JOIN Departments dept ON d.Specialty=dept.Name
+WHERE dept.Name='Cardiology';
+
+-- Billing Report
+SELECT p.Name, b.Total_Amount, b.Payment_Status, b.Date
+FROM Bills b
+JOIN Patients p ON b.Patient_ID=p.Patient_ID;
+
+-- Operators & Aliases
+SELECT Name AS PatientName, Age+5 AS AgeInFuture FROM Patients;
+SELECT * FROM Bills WHERE Total_Amount BETWEEN 1000 AND 5000;
