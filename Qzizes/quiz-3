@@ -13,6 +13,13 @@ CREATE TABLE Employees (
     Email VARCHAR(100)
 );
 
+INSERT INTO Employees (EmpID, Name, Department, Salary, Email) VALUES
+(101, 'Rohit Sharma', 'Finance', 90000, 'rohit@company.com'),
+(102, 'Anjali Verma', 'HR', 60000, 'anjali@company.com'),
+(103, 'Vikram Singh', 'IT', 75000, 'vikram@company.com'),
+(104, 'Priya Kapoor', 'Finance', 82000, 'priya@company.com'),
+(105, 'Amit Kumar', 'IT', 70000, 'amit@company.com');
+
 -- Q2. Update salary of employee with EmpID = 105
 UPDATE Employees
 SET Salary = 75000
@@ -158,33 +165,3 @@ GROUP BY CustomerID
 HAVING SUM(Amount) > (
     SELECT AVG(Amount) FROM Orders
 );
-
--- Part F: Functions
-
--- Q21. Current date and time
-SELECT NOW() AS CurrentDateTime;
-
--- Q22. Length of each employee’s name
-SELECT Name, LENGTH(Name) AS NameLength
-FROM Employees;
-
--- Q23. tal number of employees
-SELECT COUNT(*) AS TotalEmployees
-FROM Employees;
-
--- Q24. ate user-defined function GetBonus & use it
-DELIMITER //
-CREATE FUNCTION GetBonus(salary DECIMAL(10,2))
-RETURNS DECIMAL(10,2)
-DETERMINISTIC
-BEGIN
-    RETURN salary * 0.10;
-END //
-DELIMITER ;
-
-SELECT EmpID, Name, GetBonus(Salary) AS Bonus
-FROM Employees;
-
-
-SET SQL_SAFE_UPDATES = 0;
-
