@@ -1,199 +1,457 @@
--- single line commment --
-/* 
-multi 
-line 
-comment
-*/
+-- ========================================
+-- QUIZ-1: COMPANY DATABASE
+-- Tables 1 to 5 with 10 attributes each
+-- ========================================
 
---  ---------- database Queries -------------
-create database Companys ;
+-- 1. Create Database
+CREATE DATABASE IF NOT EXISTS Company;
+USE Company;
 
-use Companys ;
-
--- -------  Delete  database --------------------------------------------
-drop table Companys;
-
---  Database Anylasis ---------------------------------------------------
-/*
-T1:  Employees (ID , Name , address , contact , Email , age , qualfition , salary ,Birth_date , joining date ), 
-T2: Departments(dept_id , dept_name , head_of_dept ,total_employes, address , projects ,  section ,  Decription ,status , location ),
-T3: Projects ( project_id , project_name , Head_of_project, start_date , end_date ,client_requirement, cost_of_project ,total_employes , Decription , status ),
-T4: Salaries (employee_id, employee_name , overtime , Date  , salary , dept_id , salary_type , payment_id , leave , status ),
-T5: Clients ( id  , name ,age , address , email , contact,  client_requirement ,status  , payment ,  project_id)
-*/
-
---  -------- Table Queries   ---------------------------------------------------
---  --- Table 1 Employees-------------------------------------------------------
-create table  Employees (
-ID int primary key , 
-Name varchar(100)  , 
-address varchar(100) , 
-contact  varchar(100), 
-Email  varchar(100) ,
-age int check (age>0),
-qualfition  varchar(50), 
-salary int  ,  
-Birth_date date  , 
-joining_date datetime 
- );
- -- insert  values in table  
- insert into Employees 
- values 
-( 1 ,'Vijay', 'karjat' , '1024782835' ,'vijay098@gmail.com', 23, 'degree' , 10000 ,'2012-12-24' , '2025-03-01' ),
-( 2 ,'Rakesh', 'Thane' , '3628982835' ,'rakesh03@gmail.com', 25, 'degree' , 11000,'2010-12-02' , '2025-03-01' ),
-( 3 ,'viraj ', 'Shelu' , '1046233235' ,'viraj12@gmail.com', 23, 'diploma,' , 12000, '2012-06-06' , '2025-03-01' ),
-( 4 ,'yash', 'karjat' , '1235647738' ,'yash347@gmail.com', 24, 'diploma' ,15000, '2011-01-09' , '2025-03-01' ),
-( 5 ,'sahil', 'karjat' , '3274373823' ,'sahil098@gmail.com', 26, 'degree' ,15500 , '2013-2-24' , '2025-03-01' ),
-( 6 ,'bharat', 'karjat' , '23348456566' ,'bharat098@gmail.com', 26, 'diploma' ,15500 , '2013-12-12' , '2025-03-01' ),
-( 7 ,'bhavesh', 'karjat' , '143323736' ,'bhavesh098@gmail.com', 26, 'degree' ,15500 , '2013-02-04' , '2025-03-01' ),
-( 8 ,'raj', 'karjat' , '386846332' ,'raj098@gmail.com', 26, 'diploma' ,15500 , '2013-12-04' , '2025-03-01' ),
-( 9 ,'divya', 'karjat' , '2335457674' ,'raj098@gmail.com', 26, 'diploma' ,15500 , '2013-04-14' , '2025-03-01' ),
-( 10 ,'mansi', 'karjat' , '3214667585' ,'mansi098@gmail.com', 26, 'degree' ,15500 , '2013-12-12' , '2025-03-01' );
-
--- show in the table ----
-select*from Employees;
--- delete the table 
-drop table Employees;
--- dalete the all reacords in table  
-truncate table Employees;
-
---  --- Table 2 Departments
-create table Departments(
-dept_id int primary key , 
-dept_name varchar(50) , 
-head_of_dept varchar(15) ,
-total_employes int , 
-address  varchar(100),
-projects varchar(100) ,
-section varchar(10) ,
-Decription  varchar(100) ,
-status  varchar(100), 
-location varchar(50)
-);
- -- insert  values in table ------- 
- 
- insert into Departments
- values
- ( 1 , 'HR ' , 'viraj', 20 , ' karjat '  , 'Ai AGENT ' ,'A','good', ' active' , ' work from home ' ),
- ( 2 , ' IT ' , 'YASH', 20 , ' shelu '  , 'fanance  ' ,'B','good', ' active' , ' in company  ' ),
- ( 3 , ' HR' , 'rushikesh ', 20 , ' karjat '  , ' Ai AGENT ' ,'A','good', ' active' , ' work from home ' ),
- ( 4 , ' HR' , 'sahil', 20 , ' thane  '  , ' Ai AGENT ' ,'A','good', ' active' , ' in company ' ),
- ( 5 , ' HR' , 'kalpesh', 20 , ' kadav '  , ' Ai AGENT ' ,'A','good', ' active' , ' work from home ' ),
- ( 6, 'HR ' , 'nayan', 20 , ' karjat '  , 'Ai AGENT ' ,'A','good', ' active' , ' work from home ' ),
- ( 7 , ' IT ' , 'vinod', 20 , ' shelu '  , 'fanance  ' ,'B','good', ' active' , ' in company  ' ),
- ( 8 , ' HR' , 'rupesh ', 20 , ' karjat '  , ' Ai AGENT ' ,'A','good', ' active' , ' work from home ' ),
- ( 9 , ' HR' , 'sumit', 20 , ' thane  '  , ' Ai AGENT ' ,'A','good', ' active' , ' in company ' ),
- ( 10 , ' HR' , 'bharat', 20 , ' kadav '  , ' Ai AGENT ' ,'A','good', ' active' , ' work from home ' );
- 
- -- show in the table ----
-select*from Departments;
--- delete the table 
-drop table Departments;
--- dalete the all reacords in table  
-truncate table Departments;
-
---  --- Table 3 Projects --
-create table Projects (
-project_id int primary key , 
-project_name varchar(50) ,
-Head_of_project varchar(100) , 
-start_date datetime , 
-end_date  datetime ,
-client_requirement varchar(100),
-cost_of_project  int  ,
-total_employes int  ,
-Decription varchar(100),
-status varchar(100)
- );
- 
- -- insert  values in table ------- 
- insert into Projects
- values 
- (101 , 'Ai Dev ' ,  'yash' , '2024-12-24' , '2025-03-01' ,'hotel management software ' ,1500 , 5 , ' useful ', 'Active' ),
- (102 , 'Ai Dev ' ,  'viraj' , '2024-12-24' , '2025-03-01' ,'price' ,1500 , 5 , ' useful ', 'Active' ),
- (103 , 'Ai Dev ' ,  'bhavesh ' , '2024-12-24' , '2025-03-01' ,'hotel managenet software ' ,1500 , 5 , ' useful ', 'Active' ),
- (104 , 'Ai Dev ' ,  'bbharat' , '2024-12-24' , '2025-03-01' ,'managenet software ' ,1500 , 5 , ' useful ', 'Active' ),
- (105 , 'Ai Dev ' ,  'vikas' , '2024-12-24' , '2025-03-01' ,' college databse ' ,1500 , 5 , ' useful ', 'Active' ),
- (106 , 'Ai Dev ' ,  'vilas' , '2024-12-24' , '2025-03-01' ,'managenet software  ' ,1500 , 5 , ' useful ', 'Active' ),
- (107 , 'Ai Dev ' ,  'sahil' , '2023-12-24' , '2025-03-01' ,'hotel managenet software ' ,1500 , 5 , ' useful ', 'Active' ),
- (108 , 'Ai Dev ' ,  'vijay' , '2022-12-24' , '2025-03-01' ,'college databse' ,1500 , 5 , ' useful ', 'Active' ),
- (109 , 'Ai Dev ' ,  'omkar' , '2024-12-24' , '2025-03-01' ,'hotel managenet software ' ,1500 , 5 , ' useful ', 'Active' ),
- (110 , 'Ai Dev ' ,  'kaushal' , '2024-12-24' , '2025-03-01' ,'college  managenet software ' ,1500 , 5 , ' useful ', 'Active' );
- 
-  -- show in the table ----
-select*from Projects;
--- delete the table 
-drop table Projects;
--- dalete the all reacords in table  
-truncate table Projects;
-
---  -- Table 4 Salaries ----------------------------------------------------
-create table Salaries (
-employee_id int  , 
-employee_name varchar(100) ,
-overtime  time , 
-Date  date  , 
-salary  int , 
-dept_id int  , 
-salary_type  varchar(100),
-payment_id int   , 
-leaves  varchar(10)   ,
-status varchar(50) ,
-foreign key (employee_id ) references Employees (ID) ,
-foreign key (dept_id ) references Departments(dept_id) 
+-- ========================================
+-- TABLE 1: Departments
+-- ========================================
+CREATE TABLE Departments (
+    DeptID INT PRIMARY KEY,
+    DeptName VARCHAR(50) NOT NULL,
+    ManagerID INT,
+    Location VARCHAR(50),
+    DATE varchar(10) ,
+    UpdatedAt DATE,
+    Budget DECIMAL(10,2),
+    NumEmployees INT,
+    DeptHead VARCHAR(50),
+    DeptEmail VARCHAR(50)
 );
 
- -- insert  values in table ------- 
- insert into Salaries
- values
- (1 ,'yash', '3.00' , '2024-12-24',10000 ,1, 'banking ' , 643382386 ,'3', 'done'),
- (2 ,'bhavesh', '2.00' , '2023-12-24',16000 ,2, 'cash' , 325232386 ,'2', 'pending'),
- (3 ,'viraj', '3.00' , '2024-12-24',13000 ,3, 'banking ' , 356436684 ,'5', 'done'),
- (4 ,'nayan', '2.00' , '2023-12-24',14000 ,4, 'cash' , 43646555 ,'7', 'pending'),
- (5 ,'kalpesh', '3.00' , '2024-12-24',15000 ,5, 'banking ' , 345346568 ,'3', 'done'),
- (6 ,'mayur', '2.00' , '2023-12-24',11000 ,6, 'cash' , 95663523 ,'8', 'pending'),
- (7 ,'asmita', '3.00' , '2024-12-24',100000 ,7, 'banking ' , 34558587 ,'3', 'done'),
- (8 ,'bhushan', '2.00' , '2023-12-24',100700 ,8, 'cash' , 45435589,'7', 'pending'),
- (9 ,'sahil', '3.00' , '2024-12-24',104000 ,9, 'banking ' , 45753434 ,'3', 'done'),
- (10 ,'nihal', '2.00' , '2023-12-24',102000 ,10, 'cash' , 46363264 ,'11', 'pending');
-  -- show in the table ----
-select*from Salaries;
--- delete the table 
-drop table Salaries;
--- dalete the all reacords in table  
-truncate table Salaries;
+INSERT INTO Departments VALUES
+(1,'IT',101,'Mumbai','2023-01-01','2023-09-01',5000000,50,'Rohit Sharma','it@company.com'),
+(2,'HR',102,'Delhi','2023-01-05','2023-09-01',2000000,20,'Neha Singh','hr@company.com'),
+(3,'Finance',103,'Bangalore','2023-01-10','2023-09-01',3000000,30,'Vikram Patel','finance@company.com'),
+(4,'Marketing',104,'Mumbai','2023-01-15','2023-09-01',2500000,25,'Pooja Mehta','marketing@company.com'),
+(5,'Operations',105,'Chennai','2023-01-20','2023-09-01',3500000,40,'Anil Kumar','operations@company.com'),
+(6,'Sales',106,'Delhi','2023-01-25','2023-09-01',4000000,35,'Ramesh Iyer','sales@company.com'),
+(7,'Support',107,'Bangalore','2023-01-30','2023-09-01',1500000,15,'Sonia Rao','support@company.com'),
+(8,'R&D',108,'Mumbai','2023-02-01','2023-09-01',6000000,45,'Karan Verma','rnd@company.com'),
+(9,'Logistics',109,'Chennai','2023-02-05','2023-09-01',2800000,28,'Ritu Sharma','logistics@company.com'),
+(10,'Legal',110,'Delhi','2023-02-10','2023-09-01',1800000,12,'Amit Desai','legal@company.com');
 
--- Table 5 Clients
-create table Clients (
- id  int primary key  , 
- name varchar(100) ,
- age  int , 
- address varchar(100) ,
- email  varchar(100), 
- contact varchar (100), 
- status  varchar(100)  ,
- payment  varchar(60),
- project_id int ,
- foreign key( project_id) references Projects( project_id)
- );
- 
-  -- insert  values in table ------- 
-  insert into Clients
-  values 
-  ( 1 , 'yash' , 23 , 'karjat' ,'yash08@gamil.com ' , '3437326638' , 'active' , 'online' , 101 ),
-  ( 2 , 'vilas' , 24 , 'thane' ,'vilas04@gamil.com ' , '634782682' , 'Inactive' , 'cash' , 102 ),  
-  ( 3 , 'viraj' , 22 , 'shelu ' ,'VIRAJ74@gamil.com ' , '7562345356' , 'active' , 'online' , 103 ),
-  ( 4 , 'bhavesh' , 19 , 'CSMT' ,'bhavesh23@gamil.com ' , '365427535' , 'Inactive' , 'cash' , 104 ),
-  ( 5 , 'sahil' , 20 , 'karjat' ,'sahil6@gamil.com ' , '34353463623' , 'active' , 'online' , 105 ),
-  ( 6 , 'nihal' , 24 , 'SHELU' ,'nihal23@gamil.com ' , '33547326638' , 'Inactive' , 'cash' , 106 ),
-  ( 7 , 'vikas' ,31 , 'karjat' ,'vikas86@gamil.com ' , '5367735336' , 'active' , 'online' , 107 ),
-  ( 8 , 'manish' , 25 , 'CSMT' ,'manish24@gamil.com ' , '34373243423' , 'Inactive' , 'cash' , 108 ),
-  ( 9 , 'bhushan' , 29 , 'thane' ,'bhushan47@gamil.com ' , '356333323' , 'active' , 'online' , 109 ),
-  ( 10 , 'kunal' , 26 , 'karjat' ,'Kunal353@gamil.com ' , '63847563487' , 'active' , 'cash' , 110 );
-  
-    -- show in the table ----
-select*from Clients;
--- delete the table 
-drop table Clients;
--- dalete the all reacords in table  
-truncate table Clients;
+SELECT * FROM Departments;
+-- DROP TABLE Departments;
+-- TRUNCATE TABLE Departments;
+
+-- 1. List all departments
+SELECT * FROM Departments;
+
+-- 2. Departments located in 'Mumbai'
+SELECT * FROM Departments
+WHERE Location = 'Mumbai';
+
+-- 3. Departments with budget > 3,000,000
+SELECT DeptName, Budget FROM Departments
+WHERE Budget > 3000000;
+
+-- 4. Departments with number of employees between 20 and 40
+SELECT DeptName, NumEmployees FROM Departments
+WHERE NumEmployees BETWEEN 20 AND 40;
+
+-- 5. Departments whose name contains 'Sales'
+SELECT * FROM Departments
+WHERE DeptName LIKE '%Sales%';
+
+-- 6. Count of departments per location
+SELECT Location, COUNT(*) AS DeptCount
+FROM Departments
+GROUP BY Location;
+
+-- 7. Maximum budget among all departments
+SELECT MAX(Budget) AS MaxBudget FROM Departments;
+
+-- 8. Minimum number of employees in a department
+SELECT MIN(NumEmployees) AS MinEmployees FROM Departments;
+
+-- 9. Average budget of departments
+SELECT AVG(Budget) AS AvgBudget FROM Departments;
+
+-- 10. List departments ordered by budget descending
+SELECT DeptName, Budget FROM Departments
+ORDER BY Budget DESC;
+
+-- 11. Departments with more than 30 employees and budget > 3,000,000
+SELECT * FROM Departments
+WHERE NumEmployees > 30 AND Budget > 3000000;
+
+-- 12. Departments in 'Delhi' or 'Chennai'
+SELECT * FROM Departments
+WHERE Location IN ('Delhi','Chennai');
+
+-- 13. Departments updated after '2023-08-01'
+SELECT * FROM Departments
+WHERE UpdatedAt > '2023-08-01';
+
+-- 14. Count of departments per manager
+SELECT ManagerID, COUNT(*) AS DeptCount
+FROM Departments
+GROUP BY ManagerID;
+
+-- 15. Departments having budget above average
+SELECT DeptName, Budget FROM Departments
+WHERE Budget > (SELECT AVG(Budget) FROM Departments);
+
+-- 16. Total budget of all departments
+SELECT SUM(Budget) AS TotalBudget FROM Departments;
+
+-- 17. Departments with email ending with 'company.com'
+SELECT DeptName, DeptEmail FROM Departments
+WHERE DeptEmail LIKE '%company.com';
+
+-- 18. Departments with more than 25 employees, ordered by number of employees
+SELECT DeptName, NumEmployees FROM Departments
+WHERE NumEmployees > 25
+ORDER BY NumEmployees DESC;
+
+-- 19. Department locations with more than 2 departments
+SELECT Location, COUNT(*) AS DeptCount
+FROM Departments
+GROUP BY Location
+HAVING COUNT(*) > 2;
+
+-- 20. List departments and join with Employees to show manager name
+SELECT d.DeptName, e.EmpName AS ManagerName
+FROM Departments d
+LEFT JOIN Employees e ON d.ManagerID = e.EmpID;
+
+
+-- ========================================
+-- TABLE 2: Employees
+-- ========================================
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50) NOT NULL,
+    DeptID INT,
+    Email VARCHAR(50) UNIQUE,
+    Phone VARCHAR(15),
+    Salary DECIMAL(10,2),
+    Position VARCHAR(50),
+    JoiningDate DATE,
+    DOB DATE,
+    Address VARCHAR(100),
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID)
+);
+
+INSERT INTO Employees VALUES
+(1001,'Amit Kumar',1,'amit.kumar@company.com','9876543210',60000,'Developer','2022-05-01','1995-03-15','Mumbai'),
+(1002,'Priya Sharma',2,'priya.sharma@company.com','9876543211',50000,'HR Manager','2021-08-01','1990-07-10','Delhi'),
+(1003,'Rohit Singh',1,'rohit.singh@company.com','9876543212',65000,'Team Lead','2020-02-15','1988-05-20','Mumbai'),
+(1004,'Neha Gupta',3,'neha.gupta@company.com','9876543213',55000,'Accountant','2022-09-01','1992-09-25','Bangalore'),
+(1005,'Vikram Patel',3,'vikram.patel@company.com','9876543214',70000,'Finance Manager','2019-03-10','1985-11-12','Bangalore'),
+(1006,'Pooja Mehta',4,'pooja.mehta@company.com','9876543215',48000,'Marketing Executive','2021-06-18','1993-01-30','Mumbai'),
+(1007,'Anil Kumar',5,'anil.kumar@company.com','9876543216',52000,'Operations Manager','2020-12-05','1989-07-22','Chennai'),
+(1008,'Ramesh Iyer',6,'ramesh.iyer@company.com','9876543217',62000,'Sales Lead','2018-11-12','1987-02-14','Delhi'),
+(1009,'Sonia Rao',7,'sonia.rao@company.com','9876543218',45000,'Support Executive','2022-04-20','1994-06-05','Bangalore'),
+(1010,'Karan Verma',8,'karan.verma@company.com','9876543219',75000,'R&D Manager','2017-07-01','1985-09-18','Mumbai');
+
+SELECT * FROM Employees;
+-- DROP TABLE Employees;
+-- TRUNCATE TABLE Employees;
+
+-- 1. List all employees
+SELECT * FROM Employees;
+
+-- 2. Employees in IT department
+SELECT * FROM Employees
+WHERE DeptID = 1;
+
+-- 3. Employees with salary > 60,000
+SELECT EmpName, Salary FROM Employees
+WHERE Salary > 60000;
+
+-- 4. Employees who joined between '2020-01-01' and '2022-12-31'
+SELECT EmpName, JoiningDate FROM Employees
+WHERE JoiningDate BETWEEN '2020-01-01' AND '2022-12-31';
+
+-- 5. Employees with names starting with 'R'
+SELECT * FROM Employees
+WHERE EmpName LIKE 'R%';
+
+-- 6. Count of employees per department
+SELECT DeptID, COUNT(*) AS EmpCount
+FROM Employees
+GROUP BY DeptID;
+
+-- 7. Average salary per department
+SELECT DeptID, AVG(Salary) AS AvgSalary
+FROM Employees
+GROUP BY DeptID;
+
+-- 8. Maximum salary in the company
+SELECT MAX(Salary) AS MaxSalary FROM Employees;
+
+-- 9. Minimum salary in HR department
+SELECT MIN(Salary) AS MinSalary FROM Employees
+WHERE DeptID = 2;
+
+-- 10. Employees ordered by salary descending
+SELECT EmpName, Salary FROM Employees
+ORDER BY Salary DESC;
+
+-- 11. Employees whose salary > department average (using subquery)
+SELECT EmpName, Salary, DeptID
+FROM Employees
+WHERE Salary > (SELECT AVG(Salary) FROM Employees WHERE DeptID = Employees.DeptID);
+
+-- 12. Employees in departments 1,3,5
+SELECT * FROM Employees
+WHERE DeptID IN (1,3,5);
+
+-- 13. Employees with email containing 'company.com'
+SELECT EmpName, Email FROM Employees
+WHERE Email LIKE '%company.com%';
+
+-- 14. Count of employees having salary > 50,000
+SELECT COUNT(*) AS HighSalaryEmp FROM Employees
+WHERE Salary > 50000;
+
+-- 15. Employees with birthdays in 1990
+SELECT * FROM Employees
+WHERE YEAR(DOB) = 1990;
+
+-- 16. Join Employees with Departments to show DeptName
+SELECT e.EmpName, d.DeptName
+FROM Employees e
+INNER JOIN Departments d ON e.DeptID = d.DeptID;
+
+-- 17. Employees earning more than 60,000 in IT
+SELECT e.EmpName, e.Salary, d.DeptName
+FROM Employees e
+INNER JOIN Departments d ON e.DeptID = d.DeptID
+WHERE d.DeptName = 'IT' AND e.Salary > 60000;
+
+-- 18. Total salary per department
+SELECT DeptID, SUM(Salary) AS TotalSalary
+FROM Employees
+GROUP BY DeptID;
+
+-- 19. Departments with more than 2 employees earning >50k
+SELECT DeptID, COUNT(*) AS CountHighSalary
+FROM Employees
+WHERE Salary > 50000
+GROUP BY DeptID
+HAVING COUNT(*) > 2;
+
+-- 20. Employees ordered by joining date ascending
+SELECT EmpName, JoiningDate FROM Employees
+ORDER BY JoiningDate ASC;
+
+
+-- ========================================
+-- TABLE 3: Clients
+-- ========================================
+CREATE TABLE Clients (
+    ClientID INT PRIMARY KEY,
+    ClientName VARCHAR(50) NOT NULL,
+    Industry VARCHAR(50),
+    ContactPerson VARCHAR(50),
+    Email VARCHAR(50),
+    Phone VARCHAR(15),
+    Address VARCHAR(100),
+    City VARCHAR(50),
+    Country VARCHAR(50),
+    TotalProjects INT
+);
+
+INSERT INTO Clients VALUES
+(201,'TCS','IT','Ramesh Gupta','ramesh@tcs.com','9812345670','Mumbai','Mumbai','India',5),
+(202,'Reliance','Telecom','Sunita Joshi','sunita@reliance.com','9812345671','Mumbai','Mumbai','India',3),
+(203,'Infosys','IT','Amit Sharma','amit@infosys.com','9812345672','Bangalore','Bangalore','India',4),
+(204,'Wipro','IT','Sonia Singh','sonia@wipro.com','9812345673','Bangalore','Bangalore','India',2),
+(205,'HCL','IT','Vikram Joshi','vikram@hcl.com','Delhi','Delhi','India',3),
+(206,'Accenture','Consulting','Neha Verma','neha@accenture.com','9812345675','Mumbai','Mumbai','India',6),
+(207,'L&T','Engineering','Anil Kumar','anil@lt.com','9812345676','Mumbai','Mumbai','India',2),
+(208,'Adani','Infrastructure','Ritu Sharma','ritu@adani.com','9812345677','Chennai','Chennai','India',4),
+(209,'Tech Mahindra','IT','Karan Mehta','karan@techm.com','Pune','Pune','India',3),
+(210,'Capgemini','Consulting','Pooja Singh','pooja@capgemini.com','9812345679','Bangalore','Bangalore','India',5);
+
+SELECT * FROM Clients;
+-- DROP TABLE Clients;
+-- TRUNCATE TABLE Clients;
+
+-- 1. List all clients
+SELECT * FROM Clients;
+
+-- 2. Clients in the 'IT' industry
+SELECT * FROM Clients
+WHERE Industry = 'IT';
+
+-- 3. Clients with more than 3 projects
+SELECT ClientName, TotalProjects FROM Clients
+WHERE TotalProjects > 3;
+
+-- 4. Clients located in 'Mumbai' or 'Delhi'
+SELECT * FROM Clients
+WHERE City IN ('Mumbai','Delhi');
+
+-- 5. Clients whose name starts with 'A'
+SELECT * FROM Clients
+WHERE ClientName LIKE 'A%';
+
+-- 6. Count of clients per industry
+SELECT Industry, COUNT(*) AS ClientCount
+FROM Clients
+GROUP BY Industry;
+
+-- 7. Maximum number of projects any client has
+SELECT MAX(TotalProjects) AS MaxProjects FROM Clients;
+
+-- 8. Minimum number of projects
+SELECT MIN(TotalProjects) AS MinProjects FROM Clients;
+
+-- 9. Average number of projects per client
+SELECT AVG(TotalProjects) AS AvgProjects FROM Clients;
+
+-- 10. Clients ordered by TotalProjects descending
+SELECT ClientName, TotalProjects FROM Clients
+ORDER BY TotalProjects DESC;
+
+-- 11. Clients with email containing 'infosys' or 'tcs'
+SELECT * FROM Clients
+WHERE Email LIKE '%infosys%' OR Email LIKE '%tcs%';
+
+-- 12. Clients with TotalProjects between 3 and 5
+SELECT ClientName, TotalProjects FROM Clients
+WHERE TotalProjects BETWEEN 3 AND 5;
+
+-- 13. Count of clients per city
+SELECT City, COUNT(*) AS CityClientCount
+FROM Clients
+GROUP BY City;
+
+-- 14. Clients with industry 'Consulting' and more than 4 projects
+SELECT * FROM Clients
+WHERE Industry = 'Consulting' AND TotalProjects > 4;
+
+-- 15. Clients whose ContactPerson name contains 'R'
+SELECT * FROM Clients
+WHERE ContactPerson LIKE '%R%';
+
+-- 16. Join Clients with Projects to list client names and project names
+SELECT c.ClientName, p.ProjectName, p.Status
+FROM Clients c
+INNER JOIN Projects p ON c.ClientID = p.ClientID;
+
+-- 17. Total projects per client
+SELECT ClientName, SUM(TotalProjects) AS TotalProjectsPerClient
+FROM Clients
+GROUP BY ClientName;
+
+-- 18. Clients with more than 3 projects, ordered by number of projects
+SELECT ClientName, TotalProjects FROM Clients
+WHERE TotalProjects > 3
+ORDER BY TotalProjects DESC;
+
+-- 19. Clients having more than average projects
+SELECT ClientName, TotalProjects
+FROM Clients
+WHERE TotalProjects > (SELECT AVG(TotalProjects) FROM Clients);
+
+-- 20. Count of clients per country having more than 3 projects
+SELECT Country, COUNT(*) AS ClientCount
+FROM Clients
+WHERE TotalProjects > 3
+GROUP BY Country
+HAVING COUNT(*) > 1;
+
+-- ========================================
+-- TABLE 4: Projects
+-- ========================================
+CREATE TABLE Projects (
+    ProjectID INT PRIMARY KEY,
+    ProjectName VARCHAR(50) NOT NULL,
+    DeptID INT,
+    ClientID INT,
+    StartDate DATE,
+    EndDate DATE,
+    Budget DECIMAL(10,2),
+    Status VARCHAR(20),
+    ProjectManager VARCHAR(50),
+    Description VARCHAR(200),
+    FOREIGN KEY (DeptID) REFERENCES Departments(DeptID),
+    FOREIGN KEY (ClientID) REFERENCES Clients(ClientID)
+);
+
+INSERT INTO Projects VALUES
+(301,'Website Revamp',1,201,'2023-06-01','2023-09-01',100000,'Ongoing','Amit Kumar','Revamp client website'),
+(302,'App Development',1,202,'2023-05-01','2023-08-01',150000,'Completed','Amit Kumar','Develop mobile app'),
+(303,'Financial Audit',3,203,'2023-03-01','2023-06-01',120000,'Completed','Vikram Patel','Annual audit'),
+(304,'Marketing Campaign',4,204,'2023-07-01','2023-09-30',80000,'Ongoing','Pooja Mehta','Social media campaign'),
+(305,'Operations Optimization',5,205,'2023-04-01','2023-08-01',90000,'Completed','Anil Kumar','Improve operations'),
+(306,'Sales Strategy',6,206,'2023-05-15','2023-09-15',110000,'Ongoing','Ramesh Iyer','Increase sales revenue'),
+(307,'Customer Support Enhancement',7,207,'2023-06-01','2023-09-30',70000,'Ongoing','Sonia Rao','Enhance support'),
+(308,'R&D Prototype',8,208,'2023-01-01','2023-12-31',500000,'Ongoing','Karan Verma','Develop new prototype'),
+(309,'Logistics Planning',9,209,'2023-02-01','2023-07-01',95000,'Completed','Ritu Sharma','Improve supply chain'),
+(310,'Legal Compliance',10,210,'2023-03-01','2023-08-01',60000,'Completed','Amit Desai','Ensure legal compliance');
+
+SELECT * FROM Projects;
+-- DROP TABLE Projects;
+-- TRUNCATE TABLE Projects;
+
+-- 1. List all projects
+SELECT * FROM Projects;
+
+-- 2. Projects belonging to department ID 1 (IT)
+SELECT * FROM Projects
+WHERE DeptID = 1;
+
+-- 3. Projects with budget greater than 100,000
+SELECT ProjectName, Budget FROM Projects
+WHERE Budget > 100000;
+
+-- 4. Projects starting between '2023-05-01' and '2023-07-01'
+SELECT ProjectName, StartDate FROM Projects
+WHERE StartDate BETWEEN '2023-05-01' AND '2023-07-01';
+
+-- 5. Projects whose name contains 'Development'
+SELECT * FROM Projects
+WHERE ProjectName LIKE '%Development%';
+
+-- 6. Count of projects per department
+SELECT DeptID, COUNT(*) AS ProjectCount
+FROM Projects
+GROUP BY DeptID;
+
+-- 7. Maximum budget among projects
+SELECT MAX(Budget) AS MaxBudget FROM Projects;
+
+-- 8. Minimum budget among projects
+SELECT MIN(Budget) AS MinBudget FROM Projects;
+
+-- 9. Average budget per department
+SELECT DeptID, AVG(Budget) AS AvgBudget
+FROM Projects
+GROUP BY DeptID;
+
+-- 10. Projects ordered by end date ascending
+SELECT ProjectName, EndDate FROM Projects
+ORDER BY EndDate ASC;
+
+-- 11. Ongoing projects only
+SELECT * FROM Projects
+WHERE Status = 'Ongoing';
+
+-- 12. Projects for clients 201, 203, and 205
+SELECT * FROM Projects
+WHERE ClientID IN (201,203,205);
+
+-- 13. Projects with budget between 80,000 and 150,000
+SELECT ProjectName, Budget FROM Projects
+WHERE Budget BETWEEN 80000 AND 150000;
+
+-- 14. Join Projects with Departments to show DeptName
+SELECT p.ProjectName, d.DeptName, p.Status
+FROM Projects p
+INNER JOIN Departments d ON p.DeptID = d.DeptID;
+
+-- 15. Join Projects with Clients to show ClientName
+SELECT p.ProjectName, c.ClientName, p.Status
+FROM Projects p
+INNER JOIN Clients c ON p.ClientID = c.ClientID;
+
