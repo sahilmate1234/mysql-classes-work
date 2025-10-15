@@ -1,1 +1,237 @@
+-- ============================================================
+-- 🪙 PRACTICE SESSION – 7 : DATABASE – CRYPTOCURRENCY
+-- INSTRUCTOR : SHALINI VERMA
+-- ============================================================
+
+-- Step 1️⃣ : Create Database
+CREATE DATABASE CryptoCurrency_ISRO;
+USE CryptoCurrency_ISRO;
+
+-- ============================================================
+-- Step 2️⃣ : Create Tables (10 tables with 10+ columns)
+-- ============================================================
+
+-- 1️⃣ USERS TABLE
+CREATE TABLE Users (
+    User_ID INT PRIMARY KEY,
+    Full_Name VARCHAR(100),
+    Username VARCHAR(50),
+    Email VARCHAR(100),
+    Password VARCHAR(100),
+    Country VARCHAR(50),
+    KYC_Status VARCHAR(20),
+    Join_Date DATE,
+    Wallet_Balance DECIMAL(15,2),
+    Account_Status VARCHAR(20)
+);
+
+INSERT INTO Users VALUES
+(1, 'Rohit Mehta', 'rohit123', 'rohit@gmail.com', 'pass123', 'India', 'Verified', '2023-05-01', 50000.00, 'Active'),
+(2, 'Priya Sharma', 'priya456', 'priya@gmail.com', 'pass456', 'USA', 'Pending', '2024-02-10', 15000.00, 'Active');
+
+SELECT * FROM Users;
+TRUNCATE TABLE Users;
+DROP TABLE Users;
+
+-- 2️⃣ CRYPTOCURRENCY TABLE
+CREATE TABLE Cryptocurrency (
+    Crypto_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Symbol VARCHAR(10),
+    Market_Cap DECIMAL(20,2),
+    Circulating_Supply DECIMAL(20,2),
+    Max_Supply DECIMAL(20,2),
+    Launch_Year INT,
+    Founder VARCHAR(100),
+    Blockchain VARCHAR(50),
+    Current_Price DECIMAL(15,2)
+);
+
+INSERT INTO Cryptocurrency VALUES
+(1, 'Bitcoin', 'BTC', 850000000000, 19000000, 21000000, 2009, 'Satoshi Nakamoto', 'Bitcoin', 65000.00),
+(2, 'Ethereum', 'ETH', 400000000000, 120000000, NULL, 2015, 'Vitalik Buterin', 'Ethereum', 3200.00);
+
+SELECT * FROM Cryptocurrency;
+TRUNCATE TABLE Cryptocurrency;
+DROP TABLE Cryptocurrency;
+
+-- 3️⃣ WALLETS TABLE
+CREATE TABLE Wallets (
+    Wallet_ID INT PRIMARY KEY,
+    User_ID INT,
+    Wallet_Address VARCHAR(150),
+    Crypto_Type VARCHAR(50),
+    Balance DECIMAL(15,2),
+    Created_On DATE,
+    Last_Transaction DATE,
+    Wallet_Status VARCHAR(20),
+    Network VARCHAR(50),
+    Security_Level VARCHAR(20)
+);
+
+INSERT INTO Wallets VALUES
+(1, 1, '1AbCdEf123456', 'Bitcoin', 2.5, '2023-05-10', '2024-06-01', 'Active', 'BTC Mainnet', 'High'),
+(2, 2, '0x1234ABCDEF7890', 'Ethereum', 10.2, '2024-02-15', '2024-06-10', 'Active', 'ETH Mainnet', 'Medium');
+
+SELECT * FROM Wallets;
+TRUNCATE TABLE Wallets;
+DROP TABLE Wallets;
+
+-- 4️⃣ TRANSACTIONS TABLE
+CREATE TABLE Transactions (
+    Txn_ID INT PRIMARY KEY,
+    Wallet_ID INT,
+    Crypto_ID INT,
+    Txn_Type VARCHAR(20),
+    Amount DECIMAL(15,2),
+    Txn_Date DATETIME,
+    Txn_Fee DECIMAL(10,2),
+    Txn_Status VARCHAR(20),
+    Hash_Value VARCHAR(200),
+    Confirmation_Count INT
+);
+
+INSERT INTO Transactions VALUES
+(1, 1, 1, 'Send', 0.5, '2024-06-05 14:00:00', 10.00, 'Confirmed', 'HASH9876BTC', 5),
+(2, 2, 2, 'Receive', 1.2, '2024-06-06 18:30:00', 5.00, 'Confirmed', 'HASH1234ETH', 3);
+
+SELECT * FROM Transactions;
+TRUNCATE TABLE Transactions;
+DROP TABLE Transactions;
+
+-- 5️⃣ EXCHANGES TABLE
+CREATE TABLE Exchanges (
+    Exchange_ID INT PRIMARY KEY,
+    Exchange_Name VARCHAR(100),
+    Country VARCHAR(50),
+    Founded_Year INT,
+    CEO VARCHAR(100),
+    Registered_Users INT,
+    Supported_Coins INT,
+    Trading_Volume DECIMAL(20,2),
+    Website VARCHAR(100),
+    Status VARCHAR(20)
+);
+
+INSERT INTO Exchanges VALUES
+(1, 'Binance', 'Cayman Islands', 2017, 'Changpeng Zhao', 10000000, 350, 8000000000.00, 'www.binance.com', 'Active'),
+(2, 'Coinbase', 'USA', 2012, 'Brian Armstrong', 5000000, 250, 5000000000.00, 'www.coinbase.com', 'Active');
+
+SELECT * FROM Exchanges;
+TRUNCATE TABLE Exchanges;
+DROP TABLE Exchanges;
+
+-- 6️⃣ MARKET TABLE
+CREATE TABLE Market (
+    Market_ID INT PRIMARY KEY,
+    Exchange_ID INT,
+    Crypto_ID INT,
+    Opening_Price DECIMAL(15,2),
+    Closing_Price DECIMAL(15,2),
+    High DECIMAL(15,2),
+    Low DECIMAL(15,2),
+    Volume_Traded DECIMAL(20,2),
+    Market_Date DATE,
+    Price_Change_Percent DECIMAL(5,2)
+);
+
+INSERT INTO Market VALUES
+(1, 1, 1, 64000.00, 65000.00, 65500.00, 63500.00, 250000000.00, '2024-06-15', 1.56),
+(2, 2, 2, 3100.00, 3200.00, 3225.00, 3080.00, 150000000.00, '2024-06-15', 3.22);
+
+SELECT * FROM Market;
+TRUNCATE TABLE Market;
+DROP TABLE Market;
+
+-- 7️⃣ MINING TABLE
+CREATE TABLE Mining (
+    Mining_ID INT PRIMARY KEY,
+    Crypto_ID INT,
+    Miner_Name VARCHAR(100),
+    Hashrate VARCHAR(50),
+    Energy_Consumption DECIMAL(10,2),
+    Reward_Earned DECIMAL(15,2),
+    Mining_Date DATE,
+    Pool_Name VARCHAR(100),
+    Location VARCHAR(50),
+    Status VARCHAR(20)
+);
+
+INSERT INTO Mining VALUES
+(1, 1, 'Ravi Patel', '120 TH/s', 2500.50, 0.002, '2024-06-10', 'AntPool', 'India', 'Active'),
+(2, 2, 'Lisa Brown', '80 GH/s', 1300.75, 0.1, '2024-06-11', 'EtherMine', 'USA', 'Active');
+
+SELECT * FROM Mining;
+TRUNCATE TABLE Mining;
+DROP TABLE Mining;
+
+-- 8️⃣ DEVELOPERS TABLE
+CREATE TABLE Developers (
+    Dev_ID INT PRIMARY KEY,
+    Crypto_ID INT,
+    Dev_Name VARCHAR(100),
+    Role VARCHAR(50),
+    Country VARCHAR(50),
+    Experience_Years INT,
+    Email VARCHAR(100),
+    GitHub_Profile VARCHAR(100),
+    Joined_On DATE,
+    Status VARCHAR(20)
+);
+
+INSERT INTO Developers VALUES
+(1, 1, 'Nakamoto Labs', 'Core Dev', 'Japan', 15, 'btcdev@bitcoin.org', 'github.com/btcdev', '2009-01-01', 'Active'),
+(2, 2, 'Vitalik Buterin', 'Founder', 'Russia', 10, 'vitalik@eth.com', 'github.com/vitalik', '2015-07-30', 'Active');
+
+SELECT * FROM Developers;
+TRUNCATE TABLE Developers;
+DROP TABLE Developers;
+
+-- 9️⃣ PORTFOLIO TABLE
+CREATE TABLE Portfolio (
+    Portfolio_ID INT PRIMARY KEY,
+    User_ID INT,
+    Crypto_ID INT,
+    Quantity DECIMAL(15,4),
+    Average_Buy DECIMAL(15,2),
+    Current_Value DECIMAL(15,2),
+    Profit_Loss DECIMAL(15,2),
+    Last_Updated DATE,
+    Strategy VARCHAR(50),
+    Risk_Level VARCHAR(20)
+);
+
+INSERT INTO Portfolio VALUES
+(1, 1, 1, 1.5000, 55000.00, 65000.00, 15000.00, '2024-06-12', 'HODL', 'Medium'),
+(2, 2, 2, 5.0000, 2800.00, 3200.00, 2000.00, '2024-06-13', 'Day Trade', 'High');
+
+SELECT * FROM Portfolio;
+TRUNCATE TABLE Portfolio;
+DROP TABLE Portfolio;
+
+-- 🔟 SECURITY_LOG TABLE
+CREATE TABLE Security_Log (
+    Log_ID INT PRIMARY KEY,
+    User_ID INT,
+    Action_Type VARCHAR(50),
+    IP_Address VARCHAR(50),
+    Device VARCHAR(50),
+    Location VARCHAR(100),
+    Action_Date DATETIME,
+    Status VARCHAR(20),
+    Remarks VARCHAR(100),
+    Severity_Level VARCHAR(20)
+);
+
+INSERT INTO Security_Log VALUES
+(1, 1, 'Login', '192.168.1.10', 'Laptop', 'Delhi, India', '2024-06-14 09:30:00', 'Success', 'Authorized login', 'Low'),
+(2, 2, 'Password Reset', '172.16.0.5', 'Mobile', 'New York, USA', '2024-06-15 10:00:00', 'Success', 'User reset', 'Medium');
+
+SELECT * FROM Security_Log;
+TRUNCATE TABLE Security_Log;
+DROP TABLE Security_Log;
+
+-- ============================================================
+-- ✅ END OF PRACTICE SESSION – 7 : CRYPTOCURRENCY DATABASE
+-- ============================================================
 
