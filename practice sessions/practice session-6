@@ -1,1 +1,249 @@
+-- ============================================================
+-- 🛰️ PRACTICE SESSION – 6 : DATABASE – ISRO
+-- TOPIC : AIRLINE MANAGEMENT SYSTEM
+-- ============================================================
+
+-- Step 1️⃣ : Create Database
+CREATE DATABASE Airlines_ISRO;
+USE Airlines_ISRO;
+
+-- ============================================================
+-- Step 2️⃣ : Create Tables (10 Tables, 10+ Attributes Each)
+-- ============================================================
+
+-- 1. Airline Table
+CREATE TABLE Airline (
+    Airline_ID INT PRIMARY KEY,
+    Airline_Name VARCHAR(100),
+    Country VARCHAR(50),
+    Founded_Year INT,
+    Headquarters VARCHAR(100),
+    CEO VARCHAR(100),
+    Fleet_Size INT,
+    IATA_Code CHAR(2),
+    ICAO_Code CHAR(3),
+    Contact_Number VARCHAR(20)
+);
+
+-- 2. Airport Table
+CREATE TABLE Airport (
+    Airport_ID INT PRIMARY KEY,
+    Airport_Name VARCHAR(100),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    Country VARCHAR(50),
+    IATA_Code CHAR(3),
+    ICAO_Code CHAR(4),
+    Runways INT,
+    Capacity INT,
+    Contact_Number VARCHAR(20)
+);
+
+-- 3. Aircraft Table
+CREATE TABLE Aircraft (
+    Aircraft_ID INT PRIMARY KEY,
+    Airline_ID INT,
+    Model VARCHAR(100),
+    Manufacturer VARCHAR(50),
+    Seating_Capacity INT,
+    Range_km INT,
+    Engine_Type VARCHAR(50),
+    Purchase_Date DATE,
+    Status VARCHAR(20),
+    Last_Maintenance DATE,
+    FOREIGN KEY (Airline_ID) REFERENCES Airline(Airline_ID)
+);
+
+-- 4. Flight Table
+CREATE TABLE Flight (
+    Flight_ID INT PRIMARY KEY,
+    Airline_ID INT,
+    Aircraft_ID INT,
+    Source_Airport INT,
+    Destination_Airport INT,
+    Departure_Time DATETIME,
+    Arrival_Time DATETIME,
+    Duration_Hours DECIMAL(4,2),
+    Ticket_Price DECIMAL(10,2),
+    Status VARCHAR(20),
+    FOREIGN KEY (Airline_ID) REFERENCES Airline(Airline_ID),
+    FOREIGN KEY (Aircraft_ID) REFERENCES Aircraft(Aircraft_ID),
+    FOREIGN KEY (Source_Airport) REFERENCES Airport(Airport_ID),
+    FOREIGN KEY (Destination_Airport) REFERENCES Airport(Airport_ID)
+);
+
+-- 5. Passenger Table
+CREATE TABLE Passenger (
+    Passenger_ID INT PRIMARY KEY,
+    Full_Name VARCHAR(100),
+    Gender VARCHAR(10),
+    DOB DATE,
+    Passport_Number VARCHAR(20),
+    Nationality VARCHAR(50),
+    Phone_Number VARCHAR(20),
+    Email VARCHAR(100),
+    Address VARCHAR(150),
+    Frequent_Flyer_No VARCHAR(20)
+);
+
+-- 6. Booking Table
+CREATE TABLE Booking (
+    Booking_ID INT PRIMARY KEY,
+    Flight_ID INT,
+    Passenger_ID INT,
+    Booking_Date DATE,
+    Seat_Number VARCHAR(10),
+    Class VARCHAR(20),
+    Fare DECIMAL(10,2),
+    Payment_Status VARCHAR(20),
+    Booking_Status VARCHAR(20),
+    Payment_Mode VARCHAR(20),
+    FOREIGN KEY (Flight_ID) REFERENCES Flight(Flight_ID),
+    FOREIGN KEY (Passenger_ID) REFERENCES Passenger(Passenger_ID)
+);
+
+-- 7. Staff Table
+CREATE TABLE Staff (
+    Staff_ID INT PRIMARY KEY,
+    Airline_ID INT,
+    Full_Name VARCHAR(100),
+    Designation VARCHAR(50),
+    Gender VARCHAR(10),
+    Salary DECIMAL(10,2),
+    Joining_Date DATE,
+    Email VARCHAR(100),
+    Phone_Number VARCHAR(20),
+    Address VARCHAR(150),
+    FOREIGN KEY (Airline_ID) REFERENCES Airline(Airline_ID)
+);
+
+-- 8. Pilot Table
+CREATE TABLE Pilot (
+    Pilot_ID INT PRIMARY KEY,
+    Staff_ID INT,
+    License_Number VARCHAR(30),
+    Experience_Years INT,
+    Rating VARCHAR(20),
+    Flight_Hours INT,
+    Nationality VARCHAR(50),
+    Active_Status VARCHAR(20),
+    Medical_Expiry DATE,
+    Remarks VARCHAR(100),
+    FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID)
+);
+
+-- 9. Maintenance Table
+CREATE TABLE Maintenance (
+    Maintenance_ID INT PRIMARY KEY,
+    Aircraft_ID INT,
+    Engineer_Name VARCHAR(100),
+    Check_Date DATE,
+    Next_Check DATE,
+    Description VARCHAR(200),
+    Cost DECIMAL(10,2),
+    Status VARCHAR(20),
+    Workshop_Name VARCHAR(100),
+    Remarks VARCHAR(100),
+    FOREIGN KEY (Aircraft_ID) REFERENCES Aircraft(Aircraft_ID)
+);
+
+-- 10. Route Table
+CREATE TABLE Route (
+    Route_ID INT PRIMARY KEY,
+    Source_Airport INT,
+    Destination_Airport INT,
+    Distance_km INT,
+    Estimated_Time_Hours DECIMAL(4,2),
+    Route_Code VARCHAR(10),
+    Active_Status VARCHAR(20),
+    Created_On DATE,
+    Updated_On DATE,
+    FOREIGN KEY (Source_Airport) REFERENCES Airport(Airport_ID),
+    FOREIGN KEY (Destination_Airport) REFERENCES Airport(Airport_ID)
+);
+
+-- ============================================================
+-- Step 3️⃣ : Insert Sample Data
+-- ============================================================
+
+INSERT INTO Airline VALUES 
+(1, 'Air India', 'India', 1932, 'New Delhi', 'Campbell Wilson', 150, 'AI', 'AIC', '1800-180-1407'),
+(2, 'IndiGo', 'India', 2006, 'Gurugram', 'Pieter Elbers', 300, '6E', 'IGO', '1800-180-3838');
+
+INSERT INTO Airport VALUES 
+(1, 'Indira Gandhi Intl', 'Delhi', 'Delhi', 'India', 'DEL', 'VIDP', 3, 80000, '011-2567-8900'),
+(2, 'Chhatrapati Shivaji Intl', 'Mumbai', 'Maharashtra', 'India', 'BOM', 'VABB', 3, 95000, '022-6685-1000');
+
+INSERT INTO Aircraft VALUES 
+(1, 1, 'Boeing 787', 'Boeing', 250, 13600, 'Jet', '2018-05-10', 'Active', '2024-01-10'),
+(2, 2, 'Airbus A320', 'Airbus', 180, 6100, 'Turbofan', '2019-03-15', 'Active', '2024-03-20');
+
+INSERT INTO Passenger VALUES 
+(1, 'Rohit Sharma', 'Male', '1987-04-30', 'P123456', 'India', '9876543210', 'rohit@gmail.com', 'Mumbai', 'FF1234'),
+(2, 'Priya Singh', 'Female', '1992-10-12', 'P654321', 'India', '9876500000', 'priya@gmail.com', 'Delhi', 'FF5678');
+
+INSERT INTO Flight VALUES 
+(1, 1, 1, 1, 2, '2024-06-20 09:00:00', '2024-06-20 11:30:00', 2.5, 4500.00, 'On-Time'),
+(2, 2, 2, 2, 1, '2024-06-22 14:00:00', '2024-06-22 16:30:00', 2.5, 4000.00, 'Delayed');
+
+INSERT INTO Booking VALUES 
+(1, 1, 1, '2024-06-10', '12A', 'Economy', 4500.00, 'Paid', 'Confirmed', 'UPI'),
+(2, 2, 2, '2024-06-18', '14B', 'Business', 4000.00, 'Unpaid', 'Pending', 'Card');
+
+INSERT INTO Staff VALUES 
+(1, 1, 'Amit Kumar', 'Pilot', 'Male', 120000.00, '2015-03-12', 'amit@airindia.in', '9876500000', 'Delhi'),
+(2, 2, 'Neha Gupta', 'Cabin Crew', 'Female', 60000.00, '2019-01-20', 'neha@indigo.in', '9876600000', 'Gurugram');
+
+INSERT INTO Pilot VALUES 
+(1, 1, 'LIC9876', 10, 'A+', 5000, 'India', 'Active', '2025-12-31', 'Fit'),
+(2, 2, 'LIC4567', 8, 'A', 4200, 'India', 'Active', '2025-08-15', 'Fit');
+
+INSERT INTO Maintenance VALUES 
+(1, 1, 'Rahul Singh', '2024-06-01', '2024-12-01', 'Engine Check', 200000.00, 'Completed', 'ISRO Workshop', 'OK'),
+(2, 2, 'Pankaj Mehta', '2024-05-20', '2024-11-20', 'Tire Replacement', 120000.00, 'Completed', 'Tata Aerospace', 'OK');
+
+INSERT INTO Route VALUES 
+(1, 1, 2, 1200, 2.5, 'RT123', 'Active', '2024-06-01', '2024-06-15'),
+(2, 2, 1, 1200, 2.5, 'RT124', 'Active', '2024-06-02', '2024-06-16');
+
+-- ============================================================
+-- Step 4️⃣ : Select Queries
+-- ============================================================
+
+SELECT * FROM Airline;
+SELECT * FROM Airport WHERE Country = 'India';
+SELECT Full_Name, Email FROM Passenger;
+SELECT Flight_ID, Ticket_Price FROM Flight WHERE Status = 'On-Time';
+SELECT COUNT(*) AS Total_Bookings FROM Booking WHERE Payment_Status = 'Paid';
+SELECT AVG(Fare) AS Average_Fare FROM Booking;
+SELECT DISTINCT Airline_Name FROM Airline;
+SELECT Flight_ID, Departure_Time, Arrival_Time FROM Flight;
+SELECT * FROM Staff WHERE Designation = 'Pilot';
+SELECT Route_Code, Distance_km FROM Route;
+
+-- ============================================================
+-- Step 5️⃣ : Truncate Example
+-- ============================================================
+
+TRUNCATE TABLE Booking;
+TRUNCATE TABLE Passenger;
+
+-- ============================================================
+-- Step 6️⃣ : Drop Tables (in reverse order to avoid FK issues)
+-- ============================================================
+
+DROP TABLE Route;
+DROP TABLE Maintenance;
+DROP TABLE Pilot;
+DROP TABLE Staff;
+DROP TABLE Booking;
+DROP TABLE Passenger;
+DROP TABLE Flight;
+DROP TABLE Aircraft;
+DROP TABLE Airport;
+DROP TABLE Airline;
+
+-- ============================================================
+-- ✅ END OF PRACTICE SESSION – 6
+-- ============================================================
 
