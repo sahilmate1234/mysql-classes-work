@@ -1,1 +1,236 @@
+-- Section A – DDL
+-- Q1
+CREATE DATABASE GroceryShopDB;
+
+-- Q2
+USE GroceryShopDB;
+
+-- Q3
+CREATE TABLE Customers (
+    CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15),
+    City VARCHAR(50),
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Q4
+CREATE TABLE Products (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL,
+    Category VARCHAR(50),
+    Price DECIMAL(10,2),
+    StockQty INT
+);
+
+-- Q5
+CREATE TABLE Orders (
+    OrderID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    TotalAmount DECIMAL(10,2),
+    Status VARCHAR(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+-- Q6
+CREATE TABLE OrderItems (
+    OrderItemID INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    SubTotal DECIMAL(10,2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+-- Q7
+CREATE TABLE Suppliers (
+    SupplierID INT AUTO_INCREMENT PRIMARY KEY,
+    SupplierName VARCHAR(100),
+    ContactName VARCHAR(100),
+    Phone VARCHAR(15),
+    City VARCHAR(50)
+);
+
+-- Q8
+ALTER TABLE Products ADD COLUMN Discount DECIMAL(5,2);
+
+-- Q9
+ALTER TABLE Products DROP COLUMN Discount;
+
+
+-- =========================
+-- Section B – DML
+-- =========================
+
+-- Q10
+INSERT INTO Customers (Name, Email, Phone, City)
+VALUES ('Sahil Mate', 'sahil@gmail.com', '9999999999', 'Mumbai'),
+('Shreya Patel', 'shreya@gmail.com', '8888888888', 'Delhi'),
+('Amit Singh', 'amit@gmail.com', '7777777777', 'Lucknow'),
+('Priya Sharma', 'priya@gmail.com', '6666666666', 'Delhi'),
+('Rohan Joshi', 'rohan@gmail.com', '5555555555', 'Pune');
+
+-- Q11
+INSERT INTO Products (ProductName, Category, Price, StockQty)
+VALUES ('Rice', 'Grains', 800.00, 50),
+('Sugar', 'Essentials', 45.00, 100),
+('Milk', 'Dairy', 60.00, 200),
+('Apples', 'Fruits', 150.00, 80),
+('Wheat Flour', 'Grains', 600.00, 70);
+
+-- Q12
+INSERT INTO Suppliers (SupplierName, ContactName, Phone, City)
+VALUES ('AgroFarm', 'Rakesh Mehta', '9000000001', 'Mumbai'),
+('FreshFoods', 'Anita Rao', '9000000002', 'Pune'),
+('DairyPure', 'Suresh Iyer', '9000000003', 'Delhi'),
+('FarmFresh', 'Rahul Nair', '9000000004', 'Lucknow'),
+('CitySupplies', 'Vikas Yadav', '9000000005', 'Delhi');
+
+-- Q13
+INSERT INTO Orders (CustomerID, OrderDate, TotalAmount, Status)
+VALUES (1, CURDATE(), 900.00, 'Completed'),
+(2, CURDATE(), 1200.00, 'Pending'),
+(3, CURDATE(), 700.00, 'Completed');
+
+-- Q14
+INSERT INTO OrderItems (OrderID, ProductID, Quantity, SubTotal)
+VALUES (1, 1, 1, 800.00),
+(1, 2, 2, 90.00),
+(2, 5, 2, 1200.00),
+(3, 4, 4, 600.00);
+
+-- Q15
+UPDATE Products SET StockQty = StockQty - 1 WHERE ProductID = 1;
+UPDATE Products SET StockQty = StockQty - 2 WHERE ProductID = 2;
+UPDATE Products SET StockQty = StockQty - 2 WHERE ProductID = 5;
+UPDATE Products SET StockQty = StockQty - 4 WHERE ProductID = 4;
+
+-- Q16
+DELETE FROM Customers WHERE City = 'Lucknow';
+
+
+-- =========================
+-- Section C – DQL
+-- =========================
+
+-- Q17
+SELECT * FROM Customers WHERE City = 'Delhi';
+
+-- Q18
+SELECT * FROM Products WHERE Price > 500;
+
+-- Q19
+SELECT City, COUNT(*) AS TotalCustomers FROM Customers GROUP BY City;
+
+-- Q20
+SELECT * FROM Products ORDER BY Price DESC LIMIT 3;
+
+-- Q21
+SELECT * FROM Orders WHERE OrderDate >= CURDATE() - INTERVAL 7 DAY;
+
+-- Q22
+SELECT * FROM Customers WHERE CustomerID NOT IN (SELECT DISTINCT CustomerID FROM Orders);
+
+-- Q23
+SELECT p.ProductName, s.SupplierName FROM Products p JOIN Suppliers s ON p.Category = s.City;
+
+-- Q24
+SELECT c.Name, SUM(o.TotalAmount) AS TotalSpent
+FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID
+GROUP BY c.CustomerID;
+
+
+-- =========================
+-- Section D – Operators & Clauses
+-- =========================
+
+-- Q25
+SELECT * FROM Products WHERE Price BETWEEN 100 AND 1000;
+
+-- Q26
+SELECT * FROM Customers WHERE Name LIKE 'S%';
+
+-- Q27
+SELECT * FROM Customers WHERE City IN ('Delhi', 'Mumbai', 'Lucknow');
+
+-- Q28
+SELECT City, COUNT(*) AS Total FROM Customers GROUP BY City HAVING COUNT(*) > 2;
+
+-- Q29
+SELECT * FROM Products ORDER BY Price DESC;
+
+
+-- =========================
+-- Section E – Joins
+-- =========================
+
+-- Q30
+SELECT o.OrderID, c.Name AS CustomerName, o.OrderDate
+FROM Orders o INNER JOIN Customers c ON o.CustomerID = c.CustomerID;
+
+-- Q31
+SELECT c.Name, o.OrderID, o.TotalAmount
+FROM Customers c LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
+
+-- Q32
+SELECT p.ProductName, oi.Quantity
+FROM Products p RIGHT JOIN OrderItems oi ON p.ProductID = oi.ProductID;
+
+-- Q33
+SELECT c.Name, o.OrderID FROM Customers c LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+UNION
+SELECT c.Name, o.OrderID FROM Customers c RIGHT JOIN Orders o ON c.CustomerID = o.CustomerID;
+
+
+-- =========================
+-- Section F – Subqueries & Views
+-- =========================
+
+-- Q34
+SELECT DISTINCT c.Name
+FROM Customers c
+WHERE c.CustomerID IN (
+    SELECT o.CustomerID
+    FROM Orders o
+    JOIN OrderItems oi ON o.OrderID = oi.OrderID
+    JOIN Products p ON oi.ProductID = p.ProductID
+    WHERE p.Price > 1000
+);
+
+-- Q35
+CREATE VIEW CustomerOrdersView AS
+SELECT c.Name AS CustomerName, o.OrderID, o.TotalAmount
+FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID;
+
+-- Q36
+SELECT * FROM CustomerOrdersView WHERE TotalAmount > 5000;
+
+-- Q37
+SELECT ProductName, Price FROM Products p1
+WHERE Price > (SELECT AVG(Price) FROM Products p2);
+
+
+-- =========================
+-- Section G – CTE
+-- =========================
+
+-- Q38
+WITH CustomerSales AS (
+    SELECT c.CustomerID, c.Name, SUM(o.TotalAmount) AS TotalSpent
+    FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID
+    GROUP BY c.CustomerID
+)
+SELECT * FROM CustomerSales WHERE TotalSpent > 10000;
+
+-- Q39
+WITH RECURSIVE Numbers AS (
+    SELECT 1 AS Num
+    UNION ALL
+    SELECT Num + 1 FROM Numbers WHERE Num < 10
+)
+SELECT * FROM Numbers;
+
 
